@@ -1,0 +1,49 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+
+# Environment variables
+.env
+.env.*
+!.env.example
+
+# Node.js
+node_modules/
+.next/
+out/
+dist/
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Python tools
+.pytest_cache/
+.mypy_cache/
+
+# Videos
+*.mp4
+*.avi
+*.mov
+*.mkv
+*.webm
+
+# AI models
+*.pt
+*.pth
+*.onnx
+
+# Logs
+*.log
+
+# Temporary
+tmp/
+temp/
