@@ -42,3 +42,4 @@ print(df.groupby("player_id")["speed"].min())
 # 4. Average speed per team
 print("\n=== AVERAGE SPEED PER TEAM ===")
 print(df.groupby("team")["speed"].mean())
+print(df.groupby("team")["speed"].mean().plot(kind="bar", title="Average Speed per Team"))
