@@ -6,6 +6,7 @@ import TacticalPitch from "@/components/TacticalPitch";
 import VideoProcessor from "@/components/VideoProcessor";
 import PlayerStatsTable from "@/components/PlayerStatsTable";
 import PredictionPanel from "@/components/PredictionPanel";
+import FootballMatchList from "@/components/FootballMatchList";
 
 export default function Home() {
   const [activeTab, setActiveTab] = useState<string>("analytics");
@@ -50,7 +51,14 @@ export default function Home() {
           </div>
         )}
 
-        {/* TAB 2: VIDEO PROCESSING PIPELINE */}
+        {/* TAB 2: FOOTBALL MATCH DATA */}
+        {activeTab === "matches" && (
+          <div className="flex flex-col gap-6">
+            <FootballMatchList />
+          </div>
+        )}
+
+        {/* TAB 3: VIDEO PROCESSING PIPELINE */}
         {activeTab === "video" && (
           <div className="flex flex-col gap-6">
             <VideoProcessor />
@@ -58,7 +66,7 @@ export default function Home() {
           </div>
         )}
 
-        {/* TAB 3: AI MATCH FORECAST */}
+        {/* TAB 4: AI MATCH FORECAST */}
         {activeTab === "prediction" && (
           <div className="flex flex-col gap-6">
             <PredictionPanel />
@@ -66,6 +74,7 @@ export default function Home() {
           </div>
         )}
       </main>
+
 
       {/* Footer */}
       <footer className="border-t border-slate-800/80 py-4 px-6 text-center text-xs text-slate-500">

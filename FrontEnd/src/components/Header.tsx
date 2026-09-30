@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useEffect } from "react";
-import { Activity, ShieldAlert, Cpu, Video, BarChart2, Sparkles, RefreshCw } from "lucide-react";
+import { Activity, ShieldAlert, Cpu, Video, BarChart2, Sparkles, RefreshCw, Trophy } from "lucide-react";
 
 interface HeaderProps {
   activeTab: string;
@@ -40,6 +40,17 @@ export default function Header({ activeTab, setActiveTab, apiConnected, onRefres
           Tactical Analytics
         </button>
         <button
+          onClick={() => setActiveTab("matches")}
+          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
+            activeTab === "matches"
+              ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-900/40"
+              : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
+          }`}
+        >
+          <Trophy className="w-4 h-4" />
+          Match Data
+        </button>
+        <button
           onClick={() => setActiveTab("video")}
           className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
             activeTab === "video"
@@ -62,6 +73,7 @@ export default function Header({ activeTab, setActiveTab, apiConnected, onRefres
           AI Forecast & xG
         </button>
       </nav>
+
 
       {/* System API Status */}
       <div className="flex items-center gap-3">

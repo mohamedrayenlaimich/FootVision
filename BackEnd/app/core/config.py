@@ -1,4 +1,8 @@
 import os
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 class Settings:
     PROJECT_NAME: str = "FootVision AI Backend"
@@ -18,9 +22,14 @@ class Settings:
     BASE_DIR: str = os.path.dirname(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
     UPLOAD_DIR: str = os.path.join(BASE_DIR, "Data", "uploads")
     PROCESSED_DIR: str = os.path.join(BASE_DIR, "Data", "processed")
+    
+    # Football Data API Settings
+    FOOTBALL_DATA_API_KEY: str = os.getenv("FOOTBALL_DATA_API_KEY", "")
+    FOOTBALL_DATA_BASE_URL: str = os.getenv("FOOTBALL_DATA_BASE_URL", "https://api.football-data.org/v4")
 
 settings = Settings()
 
 # Ensure required directories exist
 os.makedirs(settings.UPLOAD_DIR, exist_ok=True)
 os.makedirs(settings.PROCESSED_DIR, exist_ok=True)
+
