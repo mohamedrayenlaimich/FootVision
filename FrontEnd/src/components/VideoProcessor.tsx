@@ -1,41 +1,88 @@
 "use client";
 
-import React, { useState } from "react";
-import { Upload, Play, CheckCircle2, AlertCircle, Film, Cpu, Zap, Activity } from "lucide-react";
+import React, { useState, useRef } from "react";
+import { Upload, Play, CheckCircle2, AlertCircle, Film, Activity } from "lucide-react";
 
 export default function VideoProcessor() {
   const [isProcessing, setIsProcessing] = useState<boolean>(false);
   const [progress, setProgress] = useState<number>(0);
   const [currentStep, setCurrentStep] = useState<number>(0);
-  const [selectedMatch, setSelectedMatch] = useState<string>("Sample Match: PSG vs Real Madrid (1080p)");
+  const [statusMessage, setStatusMessage] = useState<string>("");
+  const [error, setError] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
 
   const steps = [
     { title: "Video Ingestion", desc: "Frame extraction & resolution validation" },
     { title: "YOLO Detection", desc: "Player & ball boundary box inference" },
-    { title: "Multi-Object Tracking", desc: "BoT-SORT ID association across frames" },
+    { title: "Multi-Object Tracking", desc: "ByteTrack ID association across frames" },
     { title: "Pitch Mapping", desc: "Homography projection to 2D pitch matrix" },
-    { title: "Stats & Forecast", desc: "Metrics computation & xG model generation" },
+    { title: "Stats Engine", desc: "Computer vision metrics computation" },
   ];
 
-  const handleStartProcessing = () => {
+  const handleFileUpload = async (file: File) => {
     setIsProcessing(true);
-    setProgress(0);
+    setProgress(5);
     setCurrentStep(0);
+    setError(null);
+    setStatusMessage(`Uploading ${file.name}...`);
 
-    let p = 0;
-    const interval = setInterval(() => {
-      p += 5;
-      setProgress(p);
-      if (p >= 20 && p < 40) setCurrentStep(1);
-      else if (p >= 40 && p < 65) setCurrentStep(2);
-      else if (p >= 65 && p < 85) setCurrentStep(3);
-      else if (p >= 85 && p <= 100) setCurrentStep(4);
+    try {
+      const formData = new FormData();
+      formData.append("file", file);
 
-      if (p >= 100) {
-        clearInterval(interval);
-        setIsProcessing(false);
+      const res = await fetch("http://localhost:8000/api/v1/video/upload", {
+        method: "POST",
+        body: formData,
+      });
+
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({ detail: "Upload failed" }));
+        throw new Error(errData.detail || "Upload failed");
       }
-    }, 200);
+
+      const data = await res.json();
+      const videoId = data.video_id;
+      setStatusMessage("Video uploaded. AI Computer Vision analysis running...");
+
+      // Poll video status
+      const pollInterval = setInterval(async () => {
+        try {
+          const statusRes = await fetch(`http://localhost:8000/api/v1/video/status/${videoId}`);
+          if (statusRes.ok) {
+            const statusData = await statusRes.json();
+            const pct = statusData.progress_percentage || 0;
+            setProgress(pct);
+
+            if (pct >= 20 && pct < 40) setCurrentStep(1);
+            else if (pct >= 40 && pct < 65) setCurrentStep(2);
+            else if (pct >= 65 && pct < 85) setCurrentStep(3);
+            else if (pct >= 85 && pct <= 100) setCurrentStep(4);
+
+            if (statusData.status === "completed" || pct >= 100) {
+              clearInterval(pollInterval);
+              setIsProcessing(false);
+              setStatusMessage("AI Video Analysis Completed!");
+            } else if (statusData.status === "failed") {
+              clearInterval(pollInterval);
+              setIsProcessing(false);
+              setError(statusData.error_message || "Video processing failed");
+            }
+          }
+        } catch {
+          // Ignore transient polling error
+        }
+      }, 500);
+
+    } catch (err: any) {
+      setError(err.message || "Failed to process video");
+      setIsProcessing(false);
+    }
+  };
+
+  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files[0]) {
+      handleFileUpload(e.target.files[0]);
+    }
   };
 
   return (
@@ -43,59 +90,36 @@ export default function VideoProcessor() {
       <div>
         <h2 className="text-lg font-bold text-slate-100 flex items-center gap-2">
           <Film className="w-5 h-5 text-emerald-400" />
-          Match Video Ingestion & Pipeline Status
+          Match Video Ingestion & Computer Vision Pipeline
         </h2>
-        <p className="text-xs text-slate-400">Process uploaded match clips, RTSP streams, or supported video URLs</p>
+        <p className="text-xs text-slate-400">Upload real football match video clips to analyze player movement & tracking</p>
       </div>
 
-      {/* Select sample match or upload */}
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-        {/* Upload Box */}
-        <div className="border-2 border-dashed border-slate-700/80 hover:border-emerald-500/50 rounded-xl p-6 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-slate-900/40 hover:bg-slate-900/80">
-          <div className="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-3">
-            <Upload className="w-6 h-6" />
-          </div>
-          <p className="text-sm font-semibold text-slate-200">Drag & Drop Match Video</p>
-          <p className="text-xs text-slate-500 mt-1">Supports MP4, AVI, MOV, MKV (Up to 4K 60fps)</p>
+      {error && (
+        <div className="flex items-center gap-2 p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs">
+          <AlertCircle className="w-4 h-4 flex-shrink-0" />
+          <span>{error}</span>
         </div>
+      )}
 
-        {/* Quick Sample Selector */}
-        <div className="bg-slate-900/70 border border-slate-800 rounded-xl p-5 flex flex-col justify-between">
-          <div>
-            <span className="text-xs font-bold text-emerald-400 uppercase tracking-wider">Quick Demo Match</span>
-            <select
-              value={selectedMatch}
-              onChange={(e) => setSelectedMatch(e.target.value)}
-              className="mt-2 w-full bg-slate-950 border border-slate-700 text-slate-200 text-xs rounded-lg p-2.5 outline-none focus:border-emerald-500"
-            >
-              <option>Sample Match: PSG vs Real Madrid (1080p)</option>
-              <option>El Clasico: Real Madrid vs Barcelona</option>
-              <option>Premier League: Man City vs Arsenal</option>
-            </select>
-          </div>
-
-          <button
-            onClick={handleStartProcessing}
-            disabled={isProcessing}
-            className={`mt-4 w-full py-2.5 px-4 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
-              isProcessing
-                ? "bg-slate-800 text-slate-500 cursor-not-allowed"
-                : "bg-gradient-to-r from-emerald-500 to-teal-600 text-slate-950 hover:from-emerald-400 hover:to-teal-500 shadow-lg shadow-emerald-500/20"
-            }`}
-          >
-            {isProcessing ? (
-              <>
-                <Activity className="w-4 h-4 animate-spin text-emerald-400" />
-                Processing Pipeline Active ({progress}%)
-              </>
-            ) : (
-              <>
-                <Play className="w-4 h-4 fill-slate-950" />
-                Run FootVision AI Processing Pipeline
-              </>
-            )}
-          </button>
+      {/* Upload Box */}
+      <div
+        onClick={() => fileInputRef.current?.click()}
+        className="border-2 border-dashed border-slate-700/80 hover:border-emerald-500/50 rounded-xl p-8 flex flex-col items-center justify-center text-center cursor-pointer transition-all bg-slate-900/40 hover:bg-slate-900/80"
+      >
+        <input
+          ref={fileInputRef}
+          type="file"
+          accept="video/mp4,video/avi,video/mov,video/mkv"
+          onChange={handleFileChange}
+          className="hidden"
+        />
+        <div className="w-12 h-12 rounded-full bg-emerald-500/10 text-emerald-400 flex items-center justify-center mb-3">
+          <Upload className="w-6 h-6" />
         </div>
+        <p className="text-sm font-semibold text-slate-200">Click to Upload Match Video File</p>
+        <p className="text-xs text-slate-500 mt-1">Supports MP4, AVI, MOV, MKV formats</p>
+        {statusMessage && <p className="text-xs text-emerald-400 font-semibold mt-2">{statusMessage}</p>}
       </div>
 
       {/* Pipeline Status Stepper */}

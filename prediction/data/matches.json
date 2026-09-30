@@ -1,0 +1,44 @@
+[
+  {
+    "date": "2025-09-10",
+    "home_team_id": 529,
+    "away_team_id": 541,
+    "home_goals": 2,
+    "away_goals": 1
+  },
+  {
+    "date": "2025-09-17",
+    "home_team_id": 42,
+    "away_team_id": 49,
+    "home_goals": 3,
+    "away_goals": 1
+  },
+  {
+    "date": "2025-09-24",
+    "home_team_id": 65,
+    "away_team_id": 64,
+    "home_goals": 2,
+    "away_goals": 2
+  },
+  {
+    "date": "2025-10-01",
+    "home_team_id": 541,
+    "away_team_id": 157,
+    "home_goals": 1,
+    "away_goals": 0
+  },
+  {
+    "date": "2025-10-15",
+    "home_team_id": 529,
+    "away_team_id": 42,
+    "home_goals": 1,
+    "away_goals": 1
+  },
+  {
+    "date": "2025-11-05",
+    "home_team_id": 64,
+    "away_team_id": 541,
+    "home_goals": 0,
+    "away_goals": 2
+  }
+]

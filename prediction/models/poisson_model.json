@@ -1,0 +1,7 @@
+{
+  "model_version": "footvision-poisson-v1.0",
+  "training_matches_count": 6,
+  "avg_league_home_goals": 1.5,
+  "avg_league_away_goals": 1.167,
+  "home_advantage_multiplier": 1.12
+}

@@ -150,9 +150,17 @@ async def get_match_players(fixture_id: int):
 @router.get(
     "/matches/{fixture_id}/head-to-head",
     summary="Get Head-to-Head History",
-    description="Retrieve previous meetings and historical team summary.",
+    description="Retrieve previous meetings and historical team summary. Auto-extracts team IDs from the fixture.",
 )
-async def get_match_head_to_head(fixture_id: int, team1_id: int = 529, team2_id: int = 541):
+async def get_match_head_to_head(fixture_id: int):
+    # Auto-fetch team IDs from the fixture instead of using hardcoded defaults
+    data = await fixture_service.get_fixtures(fixture_id=fixture_id)
+    fixtures = data.get("fixtures", [])
+    team1_id = 529  # fallback
+    team2_id = 541  # fallback
+    if fixtures:
+        team1_id = fixtures[0].get("home_team", {}).get("id", team1_id)
+        team2_id = fixtures[0].get("away_team", {}).get("id", team2_id)
     return await h2h_service.get_head_to_head(team1_id, team2_id)
 
 
@@ -165,24 +173,59 @@ async def get_match_predictions(fixture_id: int):
     # Fetch external prediction
     ext_pred = await ext_predictions_service.get_fixture_prediction(fixture_id)
 
-    # Fetch match metadata for team names
+    # Fetch match metadata for team names and IDs
     data = await fixture_service.get_fixtures(fixture_id=fixture_id)
     fixtures = data.get("fixtures", [])
     home_name = "Home Team"
     away_name = "Away Team"
+    home_team_id = None
+    away_team_id = None
 
     if fixtures:
         home_name = fixtures[0].get("home_team", {}).get("name", home_name)
         away_name = fixtures[0].get("away_team", {}).get("name", away_name)
+        home_team_id = fixtures[0].get("home_team", {}).get("id")
+        away_team_id = fixtures[0].get("away_team", {}).get("id")
 
-    # Generate FootVision Statistical Model Prediction
+    # Try to pull real H2H data to inform xG model inputs
+    h2h_home_wins = 2
+    h2h_draws = 1
+    h2h_away_wins = 1
+    home_form_avg_scored = 1.8
+    home_form_avg_conceded = 1.0
+    away_form_avg_scored = 1.4
+    away_form_avg_conceded = 1.2
+
+    if home_team_id and away_team_id:
+        try:
+            h2h_data = await h2h_service.get_head_to_head(home_team_id, away_team_id)
+            summary = h2h_data.get("summary", {})
+            h2h_home_wins = summary.get("team1_wins", h2h_home_wins)
+            h2h_draws = summary.get("draws", h2h_draws)
+            h2h_away_wins = summary.get("team2_wins", h2h_away_wins)
+            # Derive xG inputs from H2H goal data
+            total = h2h_data.get("total_meetings", 0)
+            if total > 0:
+                t1g = summary.get("team1_goals", 0)
+                t2g = summary.get("team2_goals", 0)
+                home_form_avg_scored = round(max(0.5, t1g / total), 2)
+                home_form_avg_conceded = round(max(0.3, t2g / total), 2)
+                away_form_avg_scored = round(max(0.5, t2g / total), 2)
+                away_form_avg_conceded = round(max(0.3, t1g / total), 2)
+        except Exception as h2h_err:
+            logger.warning(f"Could not fetch H2H for prediction inputs: {h2h_err}")
+
+    # Generate FootVision Statistical Model Prediction using real H2H inputs
     footvision_pred = footvision_engine.generate_prediction(
         home_team_name=home_name,
         away_team_name=away_name,
-        home_form_avg_scored=1.9,
-        home_form_avg_conceded=0.9,
-        away_form_avg_scored=1.5,
-        away_form_avg_conceded=1.1,
+        home_form_avg_scored=home_form_avg_scored,
+        home_form_avg_conceded=home_form_avg_conceded,
+        away_form_avg_scored=away_form_avg_scored,
+        away_form_avg_conceded=away_form_avg_conceded,
+        h2h_home_wins=h2h_home_wins,
+        h2h_draws=h2h_draws,
+        h2h_away_wins=h2h_away_wins,
     )
 
     return {

@@ -116,9 +116,24 @@ export default function MatchIntelligencePage({ params }: { params: Promise<{ fi
 
   const homeStats = statistics?.teams?.[0]?.statistics || {};
   const awayStats = statistics?.teams?.[1]?.statistics || {};
+  const hasStatistics = statistics?.teams && statistics.teams.length > 0;
 
   const footvisionPred = predictions?.footvision_prediction || {};
   const extPred = predictions?.external_api_prediction || {};
+
+  // Helper: Calculate stat bar widths from real numeric values
+  const calcBarWidths = (homeVal: any, awayVal: any): { homeW: number; awayW: number } => {
+    const parseNum = (v: any): number => {
+      if (v === null || v === undefined) return 0;
+      const str = String(v).replace("%", "").trim();
+      return parseFloat(str) || 0;
+    };
+    const h = parseNum(homeVal);
+    const a = parseNum(awayVal);
+    const total = h + a;
+    if (total === 0) return { homeW: 50, awayW: 50 };
+    return { homeW: Math.round((h / total) * 100), awayW: Math.round((a / total) * 100) };
+  };
 
   return (
     <div className="min-h-screen bg-[#090d16] text-slate-100 flex flex-col">
@@ -290,31 +305,42 @@ export default function MatchIntelligencePage({ params }: { params: Promise<{ fi
             <h3 className="text-base font-bold text-slate-100">Real Match Statistics</h3>
           </div>
 
-          <div className="flex flex-col gap-4">
-            {[
-              { label: "Possession", home: homeStats.possession || "58%", away: awayStats.possession || "42%" },
-              { label: "Total Shots", home: homeStats.total_shots ?? 15, away: awayStats.total_shots ?? 9 },
-              { label: "Shots on Target", home: homeStats.shots_on_target ?? 7, away: awayStats.shots_on_target ?? 3 },
-              { label: "Shots Off Target", home: homeStats.shots_off_target ?? 5, away: awayStats.shots_off_target ?? 4 },
-              { label: "Passes", home: homeStats.passes ?? 520, away: awayStats.passes ?? 390 },
-              { label: "Pass Accuracy", home: homeStats.pass_accuracy || "89%", away: awayStats.pass_accuracy || "85%" },
-              { label: "Corner Kicks", home: homeStats.corners ?? 6, away: awayStats.corners ?? 4 },
-              { label: "Fouls", home: homeStats.fouls ?? 10, away: awayStats.fouls ?? 14 },
-              { label: "Yellow Cards", home: homeStats.yellow_cards ?? 2, away: awayStats.yellow_cards ?? 3 },
-            ].map((st, idx) => (
-              <div key={idx} className="flex flex-col gap-1 text-xs">
-                <div className="flex items-center justify-between font-semibold">
-                  <span className="text-emerald-400">{st.home}</span>
-                  <span className="text-slate-400">{st.label}</span>
-                  <span className="text-cyan-400">{st.away}</span>
-                </div>
-                <div className="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden flex">
-                  <div className="h-full bg-emerald-500" style={{ width: "55%" }} />
-                  <div className="h-full bg-cyan-500" style={{ width: "45%" }} />
-                </div>
-              </div>
-            ))}
-          </div>
+          {!hasStatistics ? (
+            <div className="text-center py-6 text-xs text-slate-500">
+              Match statistics are not yet available for this fixture.
+            </div>
+          ) : (
+            <div className="flex flex-col gap-4">
+              {[
+                { label: "Possession", home: homeStats.possession, away: awayStats.possession },
+                { label: "Total Shots", home: homeStats.total_shots, away: awayStats.total_shots },
+                { label: "Shots on Target", home: homeStats.shots_on_target, away: awayStats.shots_on_target },
+                { label: "Shots Off Target", home: homeStats.shots_off_target, away: awayStats.shots_off_target },
+                { label: "Passes", home: homeStats.passes, away: awayStats.passes },
+                { label: "Pass Accuracy", home: homeStats.pass_accuracy, away: awayStats.pass_accuracy },
+                { label: "Corner Kicks", home: homeStats.corners, away: awayStats.corners },
+                { label: "Fouls", home: homeStats.fouls, away: awayStats.fouls },
+                { label: "Yellow Cards", home: homeStats.yellow_cards, away: awayStats.yellow_cards },
+              ]
+                .filter((st) => st.home !== null && st.home !== undefined && st.away !== null && st.away !== undefined)
+                .map((st, idx) => {
+                  const { homeW, awayW } = calcBarWidths(st.home, st.away);
+                  return (
+                    <div key={idx} className="flex flex-col gap-1 text-xs">
+                      <div className="flex items-center justify-between font-semibold">
+                        <span className="text-emerald-400">{st.home}</span>
+                        <span className="text-slate-400">{st.label}</span>
+                        <span className="text-cyan-400">{st.away}</span>
+                      </div>
+                      <div className="w-full h-1.5 bg-slate-900 rounded-full overflow-hidden flex">
+                        <div className="h-full bg-emerald-500 transition-all" style={{ width: `${homeW}%` }} />
+                        <div className="h-full bg-cyan-500 transition-all" style={{ width: `${awayW}%` }} />
+                      </div>
+                    </div>
+                  );
+                })}
+            </div>
+          )}
         </div>
 
         {/* SECTION: MATCH TIMELINE EVENTS */}
@@ -325,17 +351,27 @@ export default function MatchIntelligencePage({ params }: { params: Promise<{ fi
           </div>
 
           <div className="flex flex-col gap-3">
-            {(events?.events || []).map((ev: any, idx: number) => (
-              <div
-                key={idx}
-                className="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs"
-              >
-                <span className="w-12 font-bold text-emerald-400">{ev.time}</span>
-                <span className="font-semibold text-slate-200">{ev.team?.name}</span>
-                <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-medium">{ev.type} - {ev.detail}</span>
-                <span className="text-slate-400">{ev.player?.name || "Player"}</span>
+            {(events?.events || []).length === 0 ? (
+              <div className="text-center py-6 text-xs text-slate-500">
+                No match events available for this fixture.
               </div>
-            ))}
+            ) : (
+              (events?.events || []).map((ev: any, idx: number) => (
+                <div
+                  key={idx}
+                  className="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800 text-xs"
+                >
+                  <span className="w-12 font-bold text-emerald-400">
+                    {ev.time}{ev.time_extra ? `+${ev.time_extra}` : ""}&apos;
+                  </span>
+                  <span className="font-semibold text-slate-200">{ev.team?.name}</span>
+                  <span className="px-2 py-0.5 rounded bg-slate-800 text-slate-300 font-medium">
+                    {ev.type}{ev.detail && ev.detail !== ev.type ? ` — ${ev.detail}` : ""}
+                  </span>
+                  <span className="text-slate-400 max-w-[120px] truncate">{ev.player?.name || ""}</span>
+                </div>
+              ))
+            )}
           </div>
         </div>
 
@@ -346,28 +382,45 @@ export default function MatchIntelligencePage({ params }: { params: Promise<{ fi
             <h3 className="text-base font-bold text-slate-100">Team Lineups & Formations</h3>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {(lineups?.lineups || []).map((lu: any, idx: number) => (
-              <div key={idx} className="flex flex-col gap-3">
-                <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
-                  <span className="font-bold text-slate-200">{lu.team?.name}</span>
-                  <span className="text-xs font-semibold px-2 py-0.5 rounded bg-slate-800 text-emerald-400">
-                    Formation: {lu.formation || "4-3-3"}
-                  </span>
-                </div>
-                <div className="flex flex-col gap-1.5 text-xs">
-                  <span className="text-slate-400 font-medium mb-1">Starting XI:</span>
-                  {(lu.start_xi || []).map((player: any) => (
-                    <div key={player.id} className="flex items-center justify-between p-2 rounded-lg bg-slate-900/50">
-                      <span className="font-bold text-emerald-400 w-6">#{player.number}</span>
-                      <span className="text-slate-200 flex-1">{player.name}</span>
-                      <span className="text-slate-400">{player.pos}</span>
+          {(lineups?.lineups || []).length === 0 ? (
+            <div className="text-center py-6 text-xs text-slate-500">
+              Lineups are not yet available for this fixture.
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {(lineups?.lineups || []).map((lu: any, idx: number) => (
+                <div key={idx} className="flex flex-col gap-3">
+                  <div className="flex items-center justify-between border-b border-slate-800/80 pb-2">
+                    <div className="flex items-center gap-2">
+                      {lu.team?.logo && (
+                        <img src={lu.team.logo} alt={lu.team.name} className="w-6 h-6 object-contain" />
+                      )}
+                      <span className="font-bold text-slate-200">{lu.team?.name}</span>
                     </div>
-                  ))}
+                    <span className="text-xs font-semibold px-2 py-0.5 rounded bg-slate-800 text-emerald-400">
+                      {lu.formation || ""}
+                    </span>
+                  </div>
+                  {lu.coach && (
+                    <div className="text-[11px] text-slate-400 flex items-center gap-1">
+                      <span className="text-slate-500">Coach:</span>
+                      <span className="font-semibold text-slate-300">{lu.coach}</span>
+                    </div>
+                  )}
+                  <div className="flex flex-col gap-1.5 text-xs">
+                    <span className="text-slate-400 font-medium mb-1">Starting XI:</span>
+                    {(lu.start_xi || []).map((player: any, pi: number) => (
+                      <div key={pi} className="flex items-center justify-between p-2 rounded-lg bg-slate-900/50">
+                        <span className="font-bold text-emerald-400 w-6">#{player.number}</span>
+                        <span className="text-slate-200 flex-1">{player.name}</span>
+                        <span className="text-slate-400">{player.pos}</span>
+                      </div>
+                    ))}
+                  </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
         </div>
 
         {/* SECTION: HEAD-TO-HEAD HISTORY */}
@@ -377,13 +430,35 @@ export default function MatchIntelligencePage({ params }: { params: Promise<{ fi
             <h3 className="text-base font-bold text-slate-100">Head-to-Head History</h3>
           </div>
 
-          <div className="flex flex-col gap-2 text-xs">
-            {(h2h?.meetings || []).map((m: any, idx: number) => (
-              <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800">
-                <span className="text-slate-400">{m.date}</span>
-                <span className="font-bold text-slate-200">{m.home_team} {m.score} {m.away_team}</span>
+          {h2h?.summary && (
+            <div className="grid grid-cols-3 gap-3 text-center mb-2">
+              <div className="p-2 rounded-xl bg-emerald-950/30 border border-emerald-800/30">
+                <div className="text-lg font-black text-emerald-400">{h2h.summary.team1_wins ?? 0}</div>
+                <div className="text-[10px] text-slate-400">{homeTeam.name} Wins</div>
               </div>
-            ))}
+              <div className="p-2 rounded-xl bg-slate-900/60 border border-slate-800">
+                <div className="text-lg font-black text-amber-400">{h2h.summary.draws ?? 0}</div>
+                <div className="text-[10px] text-slate-400">Draws</div>
+              </div>
+              <div className="p-2 rounded-xl bg-cyan-950/30 border border-cyan-800/30">
+                <div className="text-lg font-black text-cyan-400">{h2h.summary.team2_wins ?? 0}</div>
+                <div className="text-[10px] text-slate-400">{awayTeam.name} Wins</div>
+              </div>
+            </div>
+          )}
+          <div className="flex flex-col gap-2 text-xs">
+            {(h2h?.meetings || []).length === 0 ? (
+              <div className="text-center py-4 text-slate-500">No H2H data available.</div>
+            ) : (
+              (h2h?.meetings || []).map((m: any, idx: number) => (
+                <div key={idx} className="flex items-center justify-between p-3 rounded-xl bg-slate-900/60 border border-slate-800">
+                  <span className="text-slate-400">{m.date ? new Date(m.date).toLocaleDateString("en-US", { month: "short", day: "numeric", year: "numeric" }) : "—"}</span>
+                  <span className="font-bold text-slate-200">{m.home_team}</span>
+                  <span className="px-3 py-0.5 rounded bg-slate-800 text-emerald-400 font-black">{m.score}</span>
+                  <span className="font-bold text-slate-200">{m.away_team}</span>
+                </div>
+              ))
+            )}
           </div>
         </div>
       </main>
