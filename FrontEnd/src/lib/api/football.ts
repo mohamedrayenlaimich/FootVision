@@ -53,12 +53,58 @@ export interface FetchMatchesParams {
   offset?: number;
 }
 
+export interface FixtureItem {
+  fixture_id: number;
+  date: string;
+  status?: {
+    long?: string;
+    short?: string;
+    elapsed?: number;
+  };
+  venue?: {
+    id?: number;
+    name?: string;
+    city?: string;
+  };
+  league?: {
+    id: number;
+    name: string;
+    country?: string;
+    logo?: string;
+    flag?: string;
+    season?: number;
+    round?: string;
+  };
+  home_team: {
+    id: number;
+    name: string;
+    logo?: string;
+    winner?: boolean;
+  };
+  away_team: {
+    id: number;
+    name: string;
+    logo?: string;
+    winner?: boolean;
+  };
+  goals?: {
+    home?: number;
+    away?: number;
+  };
+  score?: {
+    halftime?: { home?: number; away?: number };
+    fulltime?: { home?: number; away?: number };
+  };
+}
+
+export interface FixtureListResponse {
+  results: number;
+  fixtures: FixtureItem[];
+  note?: string;
+}
+
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_URL || "http://localhost:8000/api/v1";
 
-/**
- * Fetch matches via FootVision FastAPI backend (/api/v1/football/matches).
- * Keeps API keys safely on the backend.
- */
 export async function fetchMatches(params?: FetchMatchesParams): Promise<MatchListResponse> {
   const query = new URLSearchParams();
   if (params?.dateFrom) query.append("dateFrom", params.dateFrom);
@@ -71,17 +117,81 @@ export async function fetchMatches(params?: FetchMatchesParams): Promise<MatchLi
   const queryString = query.toString();
   const url = `${API_BASE_URL}/football/matches${queryString ? `?${queryString}` : ""}`;
 
-  const response = await fetch(url, {
-    method: "GET",
-    headers: {
-      "Content-Type": "application/json",
-    },
-  });
-
+  const response = await fetch(url, { method: "GET", headers: { "Content-Type": "application/json" } });
   if (!response.ok) {
     const errorData = await response.json().catch(() => ({ detail: "Failed to fetch matches" }));
     throw new Error(errorData.detail || `Error ${response.status}`);
   }
+  return response.json();
+}
 
+export async function fetchFixtures(params?: {
+  league?: number;
+  season?: number;
+  date?: string;
+  next?: number;
+  status?: string;
+  team?: number;
+  fixture_id?: number;
+}): Promise<FixtureListResponse> {
+  const query = new URLSearchParams();
+  if (params?.league) query.append("league", params.league.toString());
+  if (params?.season) query.append("season", params.season.toString());
+  if (params?.date) query.append("date", params.date);
+  if (params?.next) query.append("next", params.next.toString());
+  if (params?.status) query.append("status", params.status);
+  if (params?.team) query.append("team", params.team.toString());
+  if (params?.fixture_id) query.append("fixture_id", params.fixture_id.toString());
+
+  const queryString = query.toString();
+  const url = `${API_BASE_URL}/football/fixtures${queryString ? `?${queryString}` : ""}`;
+
+  const response = await fetch(url, { method: "GET", headers: { "Content-Type": "application/json" } });
+  if (!response.ok) {
+    const errorData = await response.json().catch(() => ({ detail: "Failed to fetch fixtures" }));
+    throw new Error(errorData.detail || `Error ${response.status}`);
+  }
+  return response.json();
+}
+
+export async function fetchMatchDetails(fixtureId: number): Promise<{ fixture: FixtureItem; note?: string }> {
+  const response = await fetch(`${API_BASE_URL}/football/matches/${fixtureId}`);
+  if (!response.ok) throw new Error("Failed to fetch match details");
+  return response.json();
+}
+
+export async function fetchMatchStatistics(fixtureId: number): Promise<any> {
+  const response = await fetch(`${API_BASE_URL}/football/matches/${fixtureId}/statistics`);
+  if (!response.ok) throw new Error("Failed to fetch match statistics");
+  return response.json();
+}
+
+export async function fetchMatchEvents(fixtureId: number): Promise<any> {
+  const response = await fetch(`${API_BASE_URL}/football/matches/${fixtureId}/events`);
+  if (!response.ok) throw new Error("Failed to fetch match events");
+  return response.json();
+}
+
+export async function fetchMatchLineups(fixtureId: number): Promise<any> {
+  const response = await fetch(`${API_BASE_URL}/football/matches/${fixtureId}/lineups`);
+  if (!response.ok) throw new Error("Failed to fetch match lineups");
+  return response.json();
+}
+
+export async function fetchMatchPlayers(fixtureId: number): Promise<any> {
+  const response = await fetch(`${API_BASE_URL}/football/matches/${fixtureId}/players`);
+  if (!response.ok) throw new Error("Failed to fetch match player stats");
+  return response.json();
+}
+
+export async function fetchMatchHeadToHead(fixtureId: number): Promise<any> {
+  const response = await fetch(`${API_BASE_URL}/football/matches/${fixtureId}/head-to-head`);
+  if (!response.ok) throw new Error("Failed to fetch head-to-head history");
+  return response.json();
+}
+
+export async function fetchMatchPredictions(fixtureId: number): Promise<any> {
+  const response = await fetch(`${API_BASE_URL}/football/matches/${fixtureId}/predictions`);
+  if (!response.ok) throw new Error("Failed to fetch match predictions");
   return response.json();
 }

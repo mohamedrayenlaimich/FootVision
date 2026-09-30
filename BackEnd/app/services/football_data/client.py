@@ -115,7 +115,8 @@ class FootballDataClient:
             error_json = None
             message = response.text or f"HTTP Error {status_code}"
 
-        if status_code in (401, 403):
+        is_auth_message = "token" in message.lower() or "invalid" in message.lower() or "auth" in message.lower()
+        if status_code in (401, 403) or (status_code == 400 and is_auth_message):
             raise FootballDataAuthError(f"Authentication failed: {message}", status_code=status_code, payload=error_json)
         elif status_code == 404:
             raise FootballDataNotFoundError(f"Resource not found: {message}", status_code=status_code, payload=error_json)
@@ -123,3 +124,4 @@ class FootballDataClient:
             raise FootballDataRateLimitError(f"Rate limit exceeded: {message}", status_code=status_code, payload=error_json)
         else:
             raise FootballDataAPIError(f"Football-Data API error ({status_code}): {message}", status_code=status_code, payload=error_json)
+

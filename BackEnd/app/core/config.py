@@ -27,6 +27,11 @@ class Settings:
     FOOTBALL_DATA_API_KEY: str = os.getenv("FOOTBALL_DATA_API_KEY", "")
     FOOTBALL_DATA_BASE_URL: str = os.getenv("FOOTBALL_DATA_BASE_URL", "https://api.football-data.org/v4")
 
+    # API-Football (API-Sports) Settings
+    API_FOOTBALL_KEY: str = os.getenv("API_FOOTBALL_KEY", "")
+    API_FOOTBALL_BASE_URL: str = os.getenv("API_FOOTBALL_BASE_URL", "https://v3.football.api-sports.io")
+
+
 settings = Settings()
 
 # Ensure required directories exist

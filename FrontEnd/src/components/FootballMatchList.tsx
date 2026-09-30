@@ -1,8 +1,8 @@
-"use client";
-
 import React, { useState, useEffect, useCallback } from "react";
-import { Calendar, RefreshCw, Trophy, ShieldAlert, Filter, Clock } from "lucide-react";
+import Link from "next/link";
+import { Calendar, RefreshCw, Trophy, ShieldAlert, Filter, Clock, ExternalLink } from "lucide-react";
 import { fetchMatches, Match, FetchMatchesParams } from "@/lib/api/football";
+
 
 export default function FootballMatchList() {
   const [matches, setMatches] = useState<Match[]>([]);
@@ -183,9 +183,10 @@ export default function FootballMatchList() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {matches.map((match) => (
-            <div
+            <Link
               key={match.id}
-              className="p-4 rounded-xl bg-slate-900/50 border border-slate-800/80 hover:border-emerald-500/40 transition-all flex flex-col gap-3"
+              href={`/matches/${match.id}`}
+              className="p-4 rounded-xl bg-slate-900/50 border border-slate-800/80 hover:border-emerald-500/50 hover:bg-slate-900/80 transition-all flex flex-col gap-3 group cursor-pointer"
             >
               {/* Top Meta info */}
               <div className="flex items-center justify-between text-xs border-b border-slate-800/60 pb-2">
@@ -193,7 +194,10 @@ export default function FootballMatchList() {
                   <Trophy className="w-3.5 h-3.5 text-amber-400" />
                   {match.competition?.name || "Football Match"}
                 </span>
-                {getStatusBadge(match.status)}
+                <div className="flex items-center gap-2">
+                  {getStatusBadge(match.status)}
+                  <ExternalLink className="w-3.5 h-3.5 text-slate-500 group-hover:text-emerald-400 transition-colors" />
+                </div>
               </div>
 
               {/* Teams & Score Card */}
@@ -207,7 +211,7 @@ export default function FootballMatchList() {
                       {match.homeTeam.tla || match.homeTeam.name.substring(0, 3)}
                     </div>
                   )}
-                  <span className="text-xs font-bold text-slate-200 truncate">{match.homeTeam.name}</span>
+                  <span className="text-xs font-bold text-slate-200 truncate group-hover:text-emerald-400 transition-colors">{match.homeTeam.name}</span>
                 </div>
 
                 {/* Score / VS */}
@@ -223,7 +227,7 @@ export default function FootballMatchList() {
 
                 {/* Away Team */}
                 <div className="flex items-center justify-end gap-2 flex-1 text-right">
-                  <span className="text-xs font-bold text-slate-200 truncate">{match.awayTeam.name}</span>
+                  <span className="text-xs font-bold text-slate-200 truncate group-hover:text-emerald-400 transition-colors">{match.awayTeam.name}</span>
                   {match.awayTeam.crest ? (
                     <img src={match.awayTeam.crest} alt={match.awayTeam.name} className="w-6 h-6 object-contain" />
                   ) : (
@@ -234,18 +238,21 @@ export default function FootballMatchList() {
                 </div>
               </div>
 
-              {/* Bottom Date / Matchday */}
+              {/* Bottom Date / Matchday & CTA */}
               <div className="flex items-center justify-between text-[11px] text-slate-400 pt-1">
                 <span className="flex items-center gap-1">
                   <Calendar className="w-3 h-3 text-slate-500" />
                   {formatDate(match.utcDate)}
                 </span>
-                {match.matchday && <span className="text-slate-500 font-medium">Matchday {match.matchday}</span>}
+                <span className="text-emerald-400 font-semibold group-hover:underline flex items-center gap-1">
+                  Match Intelligence →
+                </span>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       )}
+
     </div>
   );
 }
