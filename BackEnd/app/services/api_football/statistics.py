@@ -1,38 +1,66 @@
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 from app.services.api_football.client import APIFootballClient
 
 logger = logging.getLogger(__name__)
 
+# ---------------------------------------------------------------------------
+# IMPORTANT: No mock, demo, or fallback data in production.
+# ---------------------------------------------------------------------------
+
 
 class APIFootballStatisticsService:
     """
     Service for retrieving real match statistics from API-Football (/fixtures/statistics).
-    Never invents or fakes statistics. Returns null/None for missing fields.
+    Possession, shots, passes, corners, fouls — from real API data only.
+    Returns null for any field the API does not provide. Never invents values.
     """
 
     def __init__(self, client: Optional[APIFootballClient] = None):
         self.client = client or APIFootballClient()
 
-    async def get_fixture_statistics(self, fixture_id: int) -> Dict[str, Any]:
-        is_placeholder = not self.client.api_key or self.client.api_key == "your_api_football_key_here"
+    def _is_key_configured(self) -> bool:
+        key = self.client.api_key
+        return bool(key) and key not in ("your_api_football_key_here", "")
 
-        if is_placeholder:
-            logger.info("Using demonstration statistics for fixture %s", fixture_id)
-            return self._get_mock_statistics(fixture_id)
+    async def get_fixture_statistics(self, fixture_id: int) -> Dict[str, Any]:
+        if not self._is_key_configured():
+            logger.warning(
+                "API_FOOTBALL_KEY is not configured. Cannot fetch statistics for fixture %s.", fixture_id
+            )
+            return {
+                "fixture_id": fixture_id,
+                "available": False,
+                "message": "Data is currently unavailable from the data provider.",
+                "teams": [],
+            }
 
         try:
             raw_data = await self.client.get("fixtures/statistics", params={"fixture": fixture_id})
-            return self._normalize_statistics(raw_data)
+            return self._normalize_statistics(raw_data, fixture_id)
         except Exception as err:
-            logger.warning(f"Live API-Football statistics unavailable ({err}). Serving demonstration stats.")
-            return self._get_mock_statistics(fixture_id)
+            logger.warning(
+                "Live API-Football statistics unavailable for fixture %s: %s", fixture_id, err
+            )
+            return {
+                "fixture_id": fixture_id,
+                "available": False,
+                "message": "Data is currently unavailable from the data provider.",
+                "teams": [],
+            }
 
-    def _normalize_statistics(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
+    def _normalize_statistics(self, raw_data: Dict[str, Any], fixture_id: int) -> Dict[str, Any]:
         response = raw_data.get("response", [])
-        teams_stats = []
+        if not response:
+            return {
+                "fixture_id": fixture_id,
+                "available": False,
+                "message": "Statistics not yet available for this fixture.",
+                "teams": [],
+            }
 
+        teams_stats = []
         for item in response:
             team_info = item.get("team", {})
             stats_list = item.get("statistics", [])
@@ -69,52 +97,7 @@ class APIFootballStatisticsService:
             })
 
         return {
-            "fixture_id": raw_data.get("parameters", {}).get("fixture"),
-            "teams": teams_stats,
-        }
-
-    def _get_mock_statistics(self, fixture_id: int) -> Dict[str, Any]:
-        return {
             "fixture_id": fixture_id,
-            "teams": [
-                {
-                    "team": {"id": 529, "name": "FC Barcelona", "logo": "https://media.api-sports.io/football/teams/529.png"},
-                    "statistics": {
-                        "possession": "58%",
-                        "total_shots": 15,
-                        "shots_on_target": 7,
-                        "shots_off_target": 5,
-                        "blocked_shots": 3,
-                        "corners": 6,
-                        "fouls": 10,
-                        "offsides": 2,
-                        "passes": 520,
-                        "accurate_passes": 465,
-                        "pass_accuracy": "89%",
-                        "saves": 3,
-                        "yellow_cards": 2,
-                        "red_cards": 0,
-                    },
-                },
-                {
-                    "team": {"id": 541, "name": "Real Madrid", "logo": "https://media.api-sports.io/football/teams/541.png"},
-                    "statistics": {
-                        "possession": "42%",
-                        "total_shots": 9,
-                        "shots_on_target": 4,
-                        "shots_off_target": 3,
-                        "blocked_shots": 2,
-                        "corners": 4,
-                        "fouls": 14,
-                        "offsides": 1,
-                        "passes": 390,
-                        "accurate_passes": 332,
-                        "pass_accuracy": "85%",
-                        "saves": 5,
-                        "yellow_cards": 3,
-                        "red_cards": 0,
-                    },
-                },
-            ],
-            "note": "Demonstration match statistics",
+            "available": True,
+            "teams": teams_stats,
         }

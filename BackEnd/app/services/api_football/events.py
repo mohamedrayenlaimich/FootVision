@@ -1,34 +1,51 @@
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 from app.services.api_football.client import APIFootballClient
 
 logger = logging.getLogger(__name__)
 
+# ---------------------------------------------------------------------------
+# IMPORTANT: No mock, demo, or fallback data in production.
+# ---------------------------------------------------------------------------
+
 
 class APIFootballEventsService:
     """
     Service for retrieving real match events timeline from API-Football (/fixtures/events).
+    Goals, cards, substitutions, VAR decisions — from real API data only.
     """
 
     def __init__(self, client: Optional[APIFootballClient] = None):
         self.client = client or APIFootballClient()
 
-    async def get_fixture_events(self, fixture_id: int) -> Dict[str, Any]:
-        is_placeholder = not self.client.api_key or self.client.api_key == "your_api_football_key_here"
+    def _is_key_configured(self) -> bool:
+        key = self.client.api_key
+        return bool(key) and key not in ("your_api_football_key_here", "")
 
-        if is_placeholder:
-            logger.info("Using demonstration events for fixture %s", fixture_id)
-            return self._get_mock_events(fixture_id)
+    async def get_fixture_events(self, fixture_id: int) -> Dict[str, Any]:
+        if not self._is_key_configured():
+            logger.warning("API_FOOTBALL_KEY is not configured. Cannot fetch events for fixture %s.", fixture_id)
+            return {
+                "fixture_id": fixture_id,
+                "available": False,
+                "message": "Data is currently unavailable from the data provider.",
+                "events": [],
+            }
 
         try:
             raw_data = await self.client.get("fixtures/events", params={"fixture": fixture_id})
-            return self._normalize_events(raw_data)
+            return self._normalize_events(raw_data, fixture_id)
         except Exception as err:
-            logger.warning(f"Live API-Football events unavailable ({err}). Serving demonstration events.")
-            return self._get_mock_events(fixture_id)
+            logger.warning("Live API-Football events unavailable for fixture %s: %s", fixture_id, err)
+            return {
+                "fixture_id": fixture_id,
+                "available": False,
+                "message": "Data is currently unavailable from the data provider.",
+                "events": [],
+            }
 
-    def _normalize_events(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
+    def _normalize_events(self, raw_data: Dict[str, Any], fixture_id: int) -> Dict[str, Any]:
         response = raw_data.get("response", [])
         normalized_events = []
 
@@ -65,62 +82,8 @@ class APIFootballEventsService:
             })
 
         return {
-            "fixture_id": raw_data.get("parameters", {}).get("fixture"),
+            "fixture_id": fixture_id,
+            "available": True,
             "events_count": len(normalized_events),
             "events": normalized_events,
-        }
-
-    def _get_mock_events(self, fixture_id: int) -> Dict[str, Any]:
-        return {
-            "fixture_id": fixture_id,
-            "events_count": 5,
-            "events": [
-                {
-                    "time": "00'",
-                    "elapsed": 0,
-                    "team": {"id": 529, "name": "FC Barcelona"},
-                    "type": "Kickoff",
-                    "detail": "Match Start",
-                    "player": {"id": None, "name": None},
-                    "assist": None,
-                },
-                {
-                    "time": "23'",
-                    "elapsed": 23,
-                    "team": {"id": 529, "name": "FC Barcelona"},
-                    "type": "Goal",
-                    "detail": "Normal Goal",
-                    "player": {"id": 1, "name": "Robert Lewandowski"},
-                    "assist": {"id": 2, "name": "Pedri"},
-                },
-                {
-                    "time": "45+2'",
-                    "elapsed": 45,
-                    "extra": 2,
-                    "team": {"id": 541, "name": "Real Madrid"},
-                    "type": "Card",
-                    "detail": "Yellow Card",
-                    "player": {"id": 3, "name": "Jude Bellingham"},
-                    "assist": None,
-                },
-                {
-                    "time": "67'",
-                    "elapsed": 67,
-                    "team": {"id": 541, "name": "Real Madrid"},
-                    "type": "subst",
-                    "detail": "Substitution",
-                    "player": {"id": 4, "name": "Luka Modrić"},
-                    "assist": {"id": 5, "name": "Toni Kroos"},
-                },
-                {
-                    "time": "82'",
-                    "elapsed": 82,
-                    "team": {"id": 529, "name": "FC Barcelona"},
-                    "type": "Goal",
-                    "detail": "Normal Goal",
-                    "player": {"id": 6, "name": "Lamine Yamal"},
-                    "assist": {"id": 7, "name": "Raphinha"},
-                },
-            ],
-            "note": "Demonstration match timeline events",
         }

@@ -1,35 +1,65 @@
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 from app.services.api_football.client import APIFootballClient
 
 logger = logging.getLogger(__name__)
 
+# ---------------------------------------------------------------------------
+# IMPORTANT: No mock, demo, or fallback data in production.
+# ---------------------------------------------------------------------------
+
 
 class APIFootballH2HService:
     """
-    Service for retrieving Head-to-Head match history and calculating team form from real data.
+    Service for retrieving Head-to-Head match history from API-Football.
+    All historical meeting data is sourced from the real API.
+    No fake meetings, no hardcoded team names, no invented results.
     """
 
     def __init__(self, client: Optional[APIFootballClient] = None):
         self.client = client or APIFootballClient()
 
-    async def get_head_to_head(self, team1_id: int, team2_id: int) -> Dict[str, Any]:
-        is_placeholder = not self.client.api_key or self.client.api_key == "your_api_football_key_here"
+    def _is_key_configured(self) -> bool:
+        key = self.client.api_key
+        return bool(key) and key not in ("your_api_football_key_here", "")
 
-        if is_placeholder:
-            logger.info("Using demonstration H2H for teams %s vs %s", team1_id, team2_id)
-            return self._get_mock_h2h(team1_id, team2_id)
+    async def get_head_to_head(self, team1_id: int, team2_id: int) -> Dict[str, Any]:
+        if not self._is_key_configured():
+            logger.warning(
+                "API_FOOTBALL_KEY is not configured. Cannot fetch H2H for teams %s vs %s.",
+                team1_id,
+                team2_id,
+            )
+            return {
+                "available": False,
+                "message": "Data is currently unavailable from the data provider.",
+                "total_meetings": 0,
+                "summary": {},
+                "meetings": [],
+            }
 
         try:
             h2h_param = f"{team1_id}-{team2_id}"
-            raw_data = await self.client.get("fixtures/headtohead", params={"h2h": h2h_param, "last": 5})
+            raw_data = await self.client.get(
+                "fixtures/headtohead", params={"h2h": h2h_param, "last": 5}
+            )
             return self._normalize_h2h(raw_data, team1_id, team2_id)
         except Exception as err:
-            logger.warning(f"Live H2H API unavailable ({err}). Serving demo H2H data.")
-            return self._get_mock_h2h(team1_id, team2_id)
+            logger.warning(
+                "Live H2H API unavailable for teams %s vs %s: %s", team1_id, team2_id, err
+            )
+            return {
+                "available": False,
+                "message": "Data is currently unavailable from the data provider.",
+                "total_meetings": 0,
+                "summary": {},
+                "meetings": [],
+            }
 
-    def _normalize_h2h(self, raw_data: Dict[str, Any], team1_id: int, team2_id: int) -> Dict[str, Any]:
+    def _normalize_h2h(
+        self, raw_data: Dict[str, Any], team1_id: int, team2_id: int
+    ) -> Dict[str, Any]:
         response = raw_data.get("response", [])
         meetings = []
 
@@ -78,6 +108,7 @@ class APIFootballH2HService:
             })
 
         return {
+            "available": True,
             "total_meetings": len(meetings),
             "summary": {
                 "team1_wins": team1_wins,
@@ -87,24 +118,4 @@ class APIFootballH2HService:
                 "team2_goals": team2_goals,
             },
             "meetings": meetings,
-        }
-
-    def _get_mock_h2h(self, team1_id: int, team2_id: int) -> Dict[str, Any]:
-        return {
-            "total_meetings": 5,
-            "summary": {
-                "team1_wins": 3,
-                "draws": 1,
-                "team2_wins": 1,
-                "team1_goals": 8,
-                "team2_goals": 5,
-            },
-            "meetings": [
-                {"date": "2025-10-26", "fixture_id": 901, "home_team": "FC Barcelona", "away_team": "Real Madrid", "score": "2 - 1"},
-                {"date": "2025-04-21", "fixture_id": 902, "home_team": "Real Madrid", "away_team": "FC Barcelona", "score": "1 - 1"},
-                {"date": "2024-10-28", "fixture_id": 903, "home_team": "FC Barcelona", "away_team": "Real Madrid", "score": "3 - 1"},
-                {"date": "2024-03-19", "fixture_id": 904, "home_team": "Real Madrid", "away_team": "FC Barcelona", "score": "2 - 1"},
-                {"date": "2023-10-28", "fixture_id": 905, "home_team": "FC Barcelona", "away_team": "Real Madrid", "score": "1 - 0"},
-            ],
-            "note": "Demonstration Head-to-Head history",
         }

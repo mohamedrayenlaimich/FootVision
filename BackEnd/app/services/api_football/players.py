@@ -1,38 +1,66 @@
 import logging
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, Optional
 
 from app.services.api_football.client import APIFootballClient
 
 logger = logging.getLogger(__name__)
 
+# ---------------------------------------------------------------------------
+# IMPORTANT: No mock, demo, or fallback data in production.
+# ---------------------------------------------------------------------------
+
 
 class APIFootballPlayersService:
     """
     Service for retrieving player match statistics from API-Football (/fixtures/players).
-    Returns player ratings, minutes, shots, goals, assists, passes, tackles, dribbles, etc.
+    Player ratings, minutes, shots, goals, assists, passes, tackles, dribbles — real data only.
+    Never returns fake player names, fake ratings, or fake statistics.
     """
 
     def __init__(self, client: Optional[APIFootballClient] = None):
         self.client = client or APIFootballClient()
 
-    async def get_fixture_players(self, fixture_id: int) -> Dict[str, Any]:
-        is_placeholder = not self.client.api_key or self.client.api_key == "your_api_football_key_here"
+    def _is_key_configured(self) -> bool:
+        key = self.client.api_key
+        return bool(key) and key not in ("your_api_football_key_here", "")
 
-        if is_placeholder:
-            logger.info("Using demonstration player statistics for fixture %s", fixture_id)
-            return self._get_mock_players(fixture_id)
+    async def get_fixture_players(self, fixture_id: int) -> Dict[str, Any]:
+        if not self._is_key_configured():
+            logger.warning(
+                "API_FOOTBALL_KEY is not configured. Cannot fetch player stats for fixture %s.", fixture_id
+            )
+            return {
+                "fixture_id": fixture_id,
+                "available": False,
+                "message": "Data is currently unavailable from the data provider.",
+                "teams": [],
+            }
 
         try:
             raw_data = await self.client.get("fixtures/players", params={"fixture": fixture_id})
-            return self._normalize_players(raw_data)
+            return self._normalize_players(raw_data, fixture_id)
         except Exception as err:
-            logger.warning(f"Live API-Football player statistics unavailable ({err}). Serving demo player stats.")
-            return self._get_mock_players(fixture_id)
+            logger.warning(
+                "Live API-Football player statistics unavailable for fixture %s: %s", fixture_id, err
+            )
+            return {
+                "fixture_id": fixture_id,
+                "available": False,
+                "message": "Data is currently unavailable from the data provider.",
+                "teams": [],
+            }
 
-    def _normalize_players(self, raw_data: Dict[str, Any]) -> Dict[str, Any]:
+    def _normalize_players(self, raw_data: Dict[str, Any], fixture_id: int) -> Dict[str, Any]:
         response = raw_data.get("response", [])
-        teams_players = []
+        if not response:
+            return {
+                "fixture_id": fixture_id,
+                "available": False,
+                "message": "Player statistics not yet available for this fixture.",
+                "teams": [],
+            }
 
+        teams_players = []
         for item in response:
             tm = item.get("team", {})
             players_list = item.get("players", [])
@@ -92,76 +120,7 @@ class APIFootballPlayersService:
             })
 
         return {
-            "fixture_id": raw_data.get("parameters", {}).get("fixture"),
-            "teams": teams_players,
-        }
-
-    def _get_mock_players(self, fixture_id: int) -> Dict[str, Any]:
-        return {
             "fixture_id": fixture_id,
-            "teams": [
-                {
-                    "team": {"id": 529, "name": "FC Barcelona"},
-                    "players": [
-                        {
-                            "id": 110,
-                            "name": "Robert Lewandowski",
-                            "minutes": 90,
-                            "number": 9,
-                            "position": "F",
-                            "rating": "8.4",
-                            "shots": {"total": 4, "on_target": 3},
-                            "goals": {"total": 1, "assists": 0},
-                            "passes": {"total": 28, "key": 2, "accuracy": "82%"},
-                            "tackles": {"total": 1, "interceptions": 0},
-                            "cards": {"yellow": 0, "red": 0},
-                        },
-                        {
-                            "id": 109,
-                            "name": "Lamine Yamal",
-                            "minutes": 88,
-                            "number": 19,
-                            "position": "F",
-                            "rating": "8.8",
-                            "shots": {"total": 3, "on_target": 2},
-                            "goals": {"total": 1, "assists": 1},
-                            "passes": {"total": 42, "key": 4, "accuracy": "86%"},
-                            "tackles": {"total": 2, "interceptions": 1},
-                            "cards": {"yellow": 0, "red": 0},
-                        },
-                    ],
-                },
-                {
-                    "team": {"id": 541, "name": "Real Madrid"},
-                    "players": [
-                        {
-                            "id": 210,
-                            "name": "Kylian Mbappé",
-                            "minutes": 90,
-                            "number": 9,
-                            "position": "F",
-                            "rating": "7.5",
-                            "shots": {"total": 4, "on_target": 2},
-                            "goals": {"total": 1, "assists": 0},
-                            "passes": {"total": 31, "key": 1, "accuracy": "80%"},
-                            "tackles": {"total": 0, "interceptions": 0},
-                            "cards": {"yellow": 0, "red": 0},
-                        },
-                        {
-                            "id": 208,
-                            "name": "Jude Bellingham",
-                            "minutes": 90,
-                            "number": 5,
-                            "position": "M",
-                            "rating": "7.2",
-                            "shots": {"total": 1, "on_target": 0},
-                            "goals": {"total": 0, "assists": 1},
-                            "passes": {"total": 54, "key": 2, "accuracy": "88%"},
-                            "tackles": {"total": 3, "interceptions": 2},
-                            "cards": {"yellow": 1, "red": 0},
-                        },
-                    ],
-                },
-            ],
-            "note": "Demonstration player match statistics",
+            "available": True,
+            "teams": teams_players,
         }

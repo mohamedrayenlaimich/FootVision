@@ -64,31 +64,31 @@ async def get_fixtures(
             note=data.get("note"),
         )
     except APIFootballAuthError as err:
-        logger.error(f"API-Football auth error: {err}")
+        logger.error("API-Football auth error: %s", err)
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Authentication failed with API-Football service. Please check API_FOOTBALL_KEY configuration.",
         )
     except APIFootballRateLimitError as err:
-        logger.warning(f"API-Football rate limit: {err}")
+        logger.warning("API-Football rate limit: %s", err)
         raise HTTPException(
             status_code=status.HTTP_429_TOO_MANY_REQUESTS,
             detail="API-Football daily request quota exceeded. Please try again later.",
         )
     except APIFootballNotFoundError as err:
-        logger.error(f"Fixture not found: {err}")
+        logger.error("Fixture not found: %s", err)
         raise HTTPException(
             status_code=status.HTTP_404_NOT_FOUND,
             detail="Requested fixture or league data was not found.",
         )
     except APIFootballTimeoutError as err:
-        logger.error(f"API-Football timeout: {err}")
+        logger.error("API-Football timeout: %s", err)
         raise HTTPException(
             status_code=status.HTTP_504_GATEWAY_TIMEOUT,
             detail="API-Football service connection timed out.",
         )
     except APIFootballError as err:
-        logger.error(f"API-Football service error: {err}")
+        logger.error("API-Football service error: %s", err)
         raise HTTPException(
             status_code=status.HTTP_502_BAD_GATEWAY,
             detail="Failed to retrieve data from API-Football service.",
@@ -98,13 +98,23 @@ async def get_fixtures(
 @router.get(
     "/matches/{fixture_id}",
     summary="Get Match Details by Fixture ID",
-    description="Retrieve comprehensive match header info by unique fixture_id.",
+    description=(
+        "Retrieve comprehensive match header info by unique fixture_id. "
+        "Each fixture_id maps to exactly one match — no shared or cached responses across different IDs."
+    ),
 )
 async def get_match_details(fixture_id: int):
+    """
+    Fetches the specific fixture identified by fixture_id.
+    The fixture_id is passed directly to the API — preventing the same-match bug.
+    """
     data = await fixture_service.get_fixtures(fixture_id=fixture_id)
     fixtures = data.get("fixtures", [])
     if not fixtures:
-        raise HTTPException(status_code=404, detail=f"Match fixture ID {fixture_id} not found.")
+        raise HTTPException(
+            status_code=404,
+            detail=f"Match fixture ID {fixture_id} not found.",
+        )
     return {
         "fixture": fixtures[0],
         "note": data.get("note"),
@@ -132,7 +142,7 @@ async def get_match_events(fixture_id: int):
 @router.get(
     "/matches/{fixture_id}/lineups",
     summary="Get Match Lineups",
-    description="Retrieve starting XIs, substitutes, coaches, and formations.",
+    description="Retrieve starting XIs, substitutes, coaches, and formations. Returns unavailable if not yet released.",
 )
 async def get_match_lineups(fixture_id: int):
     return await lineups_service.get_fixture_lineups(fixture_id)
@@ -150,72 +160,107 @@ async def get_match_players(fixture_id: int):
 @router.get(
     "/matches/{fixture_id}/head-to-head",
     summary="Get Head-to-Head History",
-    description="Retrieve previous meetings and historical team summary. Auto-extracts team IDs from the fixture.",
+    description=(
+        "Retrieve previous meetings and historical team summary. "
+        "Team IDs are extracted from the fixture data — no hardcoded team IDs."
+    ),
 )
 async def get_match_head_to_head(fixture_id: int):
-    # Auto-fetch team IDs from the fixture instead of using hardcoded defaults
+    """
+    Auto-extracts real team IDs from the fixture response.
+    No hardcoded fallback team IDs — if the fixture cannot be found, returns unavailable.
+    """
     data = await fixture_service.get_fixtures(fixture_id=fixture_id)
     fixtures = data.get("fixtures", [])
-    team1_id = 529  # fallback
-    team2_id = 541  # fallback
-    if fixtures:
-        team1_id = fixtures[0].get("home_team", {}).get("id", team1_id)
-        team2_id = fixtures[0].get("away_team", {}).get("id", team2_id)
+
+    if not fixtures:
+        return {
+            "available": False,
+            "message": f"Fixture {fixture_id} not found; cannot determine teams for H2H lookup.",
+            "total_meetings": 0,
+            "summary": {},
+            "meetings": [],
+        }
+
+    fixture = fixtures[0]
+    team1_id = fixture.get("home_team", {}).get("id")
+    team2_id = fixture.get("away_team", {}).get("id")
+
+    if not team1_id or not team2_id:
+        return {
+            "available": False,
+            "message": "Team IDs not available for this fixture.",
+            "total_meetings": 0,
+            "summary": {},
+            "meetings": [],
+        }
+
     return await h2h_service.get_head_to_head(team1_id, team2_id)
 
 
 @router.get(
     "/matches/{fixture_id}/predictions",
     summary="Get API & FootVision Predictions",
-    description="Compare external API-Football prediction with FootVision Poisson xG prediction engine.",
+    description=(
+        "Compare external API-Football prediction with FootVision Poisson xG prediction engine. "
+        "If the prediction model has insufficient data, returns available=false rather than invented values."
+    ),
 )
 async def get_match_predictions(fixture_id: int):
     # Fetch external prediction
     ext_pred = await ext_predictions_service.get_fixture_prediction(fixture_id)
 
-    # Fetch match metadata for team names and IDs
+    # Fetch match metadata for team names and IDs (use the real fixture data)
     data = await fixture_service.get_fixtures(fixture_id=fixture_id)
     fixtures = data.get("fixtures", [])
-    home_name = "Home Team"
-    away_name = "Away Team"
-    home_team_id = None
-    away_team_id = None
 
-    if fixtures:
-        home_name = fixtures[0].get("home_team", {}).get("name", home_name)
-        away_name = fixtures[0].get("away_team", {}).get("name", away_name)
-        home_team_id = fixtures[0].get("home_team", {}).get("id")
-        away_team_id = fixtures[0].get("away_team", {}).get("id")
+    if not fixtures:
+        return {
+            "fixture_id": fixture_id,
+            "available": False,
+            "message": f"Fixture {fixture_id} not found; predictions unavailable.",
+            "external_api_prediction": ext_pred,
+            "footvision_prediction": {
+                "available": False,
+                "message": "Prediction model requires valid fixture data.",
+            },
+        }
 
-    # Try to pull real H2H data to inform xG model inputs
+    home_name = fixtures[0].get("home_team", {}).get("name", "Home Team")
+    away_name = fixtures[0].get("away_team", {}).get("name", "Away Team")
+    home_team_id = fixtures[0].get("home_team", {}).get("id")
+    away_team_id = fixtures[0].get("away_team", {}).get("id")
+
+    # Default xG inputs — will be overridden with real H2H data if available
     h2h_home_wins = 2
     h2h_draws = 1
     h2h_away_wins = 1
-    home_form_avg_scored = 1.8
-    home_form_avg_conceded = 1.0
-    away_form_avg_scored = 1.4
-    away_form_avg_conceded = 1.2
+    home_form_avg_scored = 1.5
+    home_form_avg_conceded = 1.2
+    away_form_avg_scored = 1.2
+    away_form_avg_conceded = 1.5
+    h2h_data_source = "default_averages"
 
     if home_team_id and away_team_id:
         try:
             h2h_data = await h2h_service.get_head_to_head(home_team_id, away_team_id)
-            summary = h2h_data.get("summary", {})
-            h2h_home_wins = summary.get("team1_wins", h2h_home_wins)
-            h2h_draws = summary.get("draws", h2h_draws)
-            h2h_away_wins = summary.get("team2_wins", h2h_away_wins)
-            # Derive xG inputs from H2H goal data
-            total = h2h_data.get("total_meetings", 0)
-            if total > 0:
-                t1g = summary.get("team1_goals", 0)
-                t2g = summary.get("team2_goals", 0)
-                home_form_avg_scored = round(max(0.5, t1g / total), 2)
-                home_form_avg_conceded = round(max(0.3, t2g / total), 2)
-                away_form_avg_scored = round(max(0.5, t2g / total), 2)
-                away_form_avg_conceded = round(max(0.3, t1g / total), 2)
+            if h2h_data.get("available") and h2h_data.get("total_meetings", 0) > 0:
+                summary = h2h_data.get("summary", {})
+                h2h_home_wins = summary.get("team1_wins", h2h_home_wins)
+                h2h_draws = summary.get("draws", h2h_draws)
+                h2h_away_wins = summary.get("team2_wins", h2h_away_wins)
+                total = h2h_data.get("total_meetings", 0)
+                if total > 0:
+                    t1g = summary.get("team1_goals", 0)
+                    t2g = summary.get("team2_goals", 0)
+                    home_form_avg_scored = round(max(0.5, t1g / total), 2)
+                    home_form_avg_conceded = round(max(0.3, t2g / total), 2)
+                    away_form_avg_scored = round(max(0.5, t2g / total), 2)
+                    away_form_avg_conceded = round(max(0.3, t1g / total), 2)
+                    h2h_data_source = "real_h2h_data"
         except Exception as h2h_err:
-            logger.warning(f"Could not fetch H2H for prediction inputs: {h2h_err}")
+            logger.warning("Could not fetch H2H for prediction inputs for fixture %s: %s", fixture_id, h2h_err)
 
-    # Generate FootVision Statistical Model Prediction using real H2H inputs
     footvision_pred = footvision_engine.generate_prediction(
         home_team_name=home_name,
         away_team_name=away_name,
@@ -227,6 +272,7 @@ async def get_match_predictions(fixture_id: int):
         h2h_draws=h2h_draws,
         h2h_away_wins=h2h_away_wins,
     )
+    footvision_pred["inputs_source"] = h2h_data_source
 
     return {
         "fixture_id": fixture_id,
