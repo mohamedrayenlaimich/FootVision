@@ -36,6 +36,11 @@ class Settings:
     API_FOOTBALL_KEY: str = os.getenv("API_FOOTBALL_KEY", "")
     API_FOOTBALL_BASE_URL: str = os.getenv("API_FOOTBALL_BASE_URL", "https://v3.football.api-sports.io")
 
+    # Sportmonks Football API v3 Settings
+    # Loaded from BackEnd/.env
+    SPORTMONKS_API_TOKEN: str = os.getenv("SPORTMONKS_API_TOKEN", "fT3UKE2YFmSNJ4eruJUxBqwo5oTr7wBPs6cBbWEz1pwlFoqqkldn6XKMiXyh")
+    SPORTMONKS_BASE_URL: str = os.getenv("SPORTMONKS_BASE_URL", "https://api.sportmonks.com/v3/football")
+
 
 settings = Settings()
 

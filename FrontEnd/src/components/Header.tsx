@@ -1,7 +1,18 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
-import { Activity, ShieldAlert, Cpu, Video, BarChart2, Sparkles, RefreshCw, Trophy } from "lucide-react";
+import React from "react";
+import {
+  Activity,
+  Cpu,
+  Video,
+  BarChart2,
+  Sparkles,
+  RefreshCw,
+  Trophy,
+  Wifi,
+  WifiOff,
+  CalendarDays,
+} from "lucide-react";
 
 interface HeaderProps {
   activeTab: string;
@@ -10,93 +21,96 @@ interface HeaderProps {
   onRefreshApi: () => void;
 }
 
+const NAV_TABS = [
+  { id: "matches",    label: "Matches",        icon: Trophy },
+  { id: "calendar",   label: "Match Calendar", icon: CalendarDays },
+  { id: "analytics", label: "Tactical AI",    icon: BarChart2 },
+  { id: "video",     label: "Video Pipeline", icon: Video },
+  { id: "prediction",label: "AI Forecast",    icon: Sparkles },
+] as const;
+
 export default function Header({ activeTab, setActiveTab, apiConnected, onRefreshApi }: HeaderProps) {
   return (
-    <header className="sticky top-0 z-50 glass-panel border-b border-slate-800/80 px-6 py-4 flex flex-wrap items-center justify-between gap-4">
-      {/* Brand */}
-      <div className="flex items-center gap-3">
-        <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center shadow-lg shadow-emerald-500/20">
-          <Activity className="w-6 h-6 text-slate-950 font-bold animate-pulse-glow" />
-        </div>
-        <div>
-          <h1 className="text-xl font-black tracking-tight bg-gradient-to-r from-white via-slate-200 to-slate-400 bg-clip-text text-transparent">
-            FootVision <span className="text-emerald-400">AI</span>
-          </h1>
-          <p className="text-xs text-slate-400">Real-Time Football Analytics & Match Forecasting</p>
-        </div>
-      </div>
+    <header className="sticky top-0 z-50 border-b border-white/[0.06]"
+      style={{ background: "rgba(6,10,18,0.92)", backdropFilter: "blur(24px)", WebkitBackdropFilter: "blur(24px)" }}>
+      <div className="max-w-7xl mx-auto px-4 md:px-6 py-3 flex flex-wrap items-center justify-between gap-4">
 
-      {/* Navigation Tabs */}
-      <nav className="flex items-center gap-1 bg-slate-900/80 p-1.5 rounded-xl border border-slate-800">
-        <button
-          onClick={() => setActiveTab("analytics")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
-            activeTab === "analytics"
-              ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-900/40"
-              : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
-          }`}
-        >
-          <BarChart2 className="w-4 h-4" />
-          Tactical Analytics
-        </button>
-        <button
-          onClick={() => setActiveTab("matches")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
-            activeTab === "matches"
-              ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-900/40"
-              : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
-          }`}
-        >
-          <Trophy className="w-4 h-4" />
-          Match Data
-        </button>
-        <button
-          onClick={() => setActiveTab("video")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
-            activeTab === "video"
-              ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-900/40"
-              : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
-          }`}
-        >
-          <Video className="w-4 h-4" />
-          Video Pipeline
-        </button>
-        <button
-          onClick={() => setActiveTab("prediction")}
-          className={`flex items-center gap-2 px-4 py-2 rounded-lg text-xs font-semibold transition-all ${
-            activeTab === "prediction"
-              ? "bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-900/40"
-              : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/50"
-          }`}
-        >
-          <Sparkles className="w-4 h-4" />
-          AI Forecast & xG
-        </button>
-      </nav>
-
-
-      {/* System API Status */}
-      <div className="flex items-center gap-3">
-        <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-900/90 border border-slate-800 text-xs">
-          <span
-            className={`w-2.5 h-2.5 rounded-full ${
-              apiConnected ? "bg-emerald-400 animate-ping" : "bg-amber-500"
-            }`}
-          />
-          <span className="text-slate-300 font-medium">
-            FastAPI: {apiConnected ? "Connected (v1.0.0)" : "Offline (Mock Data)"}
-          </span>
-          <button
-            onClick={onRefreshApi}
-            title="Check API Connection"
-            className="ml-1 text-slate-400 hover:text-emerald-400 transition-colors"
-          >
-            <RefreshCw className="w-3.5 h-3.5" />
-          </button>
+        {/* ── Brand ─────────────────────────────────────── */}
+        <div className="flex items-center gap-3 flex-shrink-0">
+          <div className="relative w-10 h-10">
+            <div className="absolute inset-0 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-400 blur-md opacity-60 animate-orb" />
+            <div className="relative w-10 h-10 rounded-xl bg-gradient-to-tr from-emerald-500 to-cyan-500 flex items-center justify-center shadow-lg">
+              <Activity className="w-5 h-5 text-slate-950 animate-pulse-glow" />
+            </div>
+          </div>
+          <div>
+            <h1 className="text-lg font-black tracking-tight leading-none">
+              <span className="gradient-text-white">Foot</span>
+              <span className="gradient-text-emerald">Vision</span>
+              <span className="text-slate-400 font-light text-sm ml-1.5">AI</span>
+            </h1>
+            <p className="text-[10px] text-slate-500 font-medium mt-0.5">Football Analytics Platform</p>
+          </div>
         </div>
-        <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-950/40 border border-emerald-800/50 text-emerald-400 text-xs font-semibold">
-          <Cpu className="w-3.5 h-3.5" />
-          YOLOv8 + BoT-SORT
+
+        {/* ── Nav Tabs ──────────────────────────────────── */}
+        <nav className="flex items-center gap-1 bg-slate-900/70 p-1 rounded-xl border border-white/[0.06]">
+          {NAV_TABS.map(({ id, label, icon: Icon }) => {
+            const isActive = activeTab === id;
+            return (
+              <button
+                key={id}
+                id={`tab-${id}`}
+                onClick={() => setActiveTab(id)}
+                className={`relative flex items-center gap-2 px-3.5 py-2 rounded-lg text-[11px] font-semibold transition-all duration-200 ${
+                  isActive
+                    ? "bg-gradient-to-r from-emerald-500/20 to-cyan-500/10 text-emerald-300 border border-emerald-500/30 shadow-inner"
+                    : "text-slate-400 hover:text-slate-200 hover:bg-slate-800/60"
+                }`}
+              >
+                <Icon className={`w-3.5 h-3.5 ${isActive ? "text-emerald-400" : ""}`} />
+                <span className="hidden sm:inline">{label}</span>
+                {isActive && (
+                  <span className="absolute bottom-0 left-1/2 -translate-x-1/2 translate-y-[1px] w-5 h-0.5 bg-gradient-to-r from-emerald-400 to-cyan-400 rounded-full" />
+                )}
+              </button>
+            );
+          })}
+        </nav>
+
+        {/* ── System Status ─────────────────────────────── */}
+        <div className="flex items-center gap-2 flex-shrink-0">
+          {/* API Status pill */}
+          <div className={`flex items-center gap-2 px-3 py-1.5 rounded-lg border text-[11px] font-medium transition-colors ${
+            apiConnected
+              ? "bg-emerald-950/40 border-emerald-800/60 text-emerald-400"
+              : "bg-red-950/40 border-red-800/60 text-red-400"
+          }`}>
+            <span className={`relative flex h-2 w-2`}>
+              {apiConnected && (
+                <span className="absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75 animate-ping" />
+              )}
+              <span className={`relative inline-flex rounded-full h-2 w-2 ${apiConnected ? "bg-emerald-400" : "bg-red-500"}`} />
+            </span>
+            {apiConnected ? (
+              <><Wifi className="w-3 h-3" /> Live</>
+            ) : (
+              <><WifiOff className="w-3 h-3" /> Offline</>
+            )}
+            <button
+              onClick={onRefreshApi}
+              title="Refresh API status"
+              className="ml-0.5 hover:text-white transition-colors"
+            >
+              <RefreshCw className="w-3 h-3" />
+            </button>
+          </div>
+
+          {/* Engine badge */}
+          <div className="hidden md:flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-violet-950/30 border border-violet-800/40 text-violet-400 text-[11px] font-semibold">
+            <Cpu className="w-3 h-3" />
+            YOLOv8
+          </div>
         </div>
       </div>
     </header>
