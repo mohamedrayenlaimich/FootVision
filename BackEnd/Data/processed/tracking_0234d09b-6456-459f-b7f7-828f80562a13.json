@@ -1,0 +1,6863 @@
+{
+  "summary": {
+    "video_id": "0234d09b-6456-459f-b7f7-828f80562a13",
+    "status": "completed",
+    "progress_percentage": 100.0,
+    "total_frames": 181,
+    "processed_frames": 181,
+    "duration_seconds": 6.03,
+    "fps": 30.0,
+    "width": 720,
+    "height": 720,
+    "elapsed_processing_seconds": 156.16,
+    "total_unique_players": 36,
+    "team_a_players_count": 26,
+    "team_b_players_count": 11,
+    "referee_detected": true,
+    "referee_ids": [
+      64,
+      2,
+      70,
+      6,
+      7,
+      143,
+      209
+    ],
+    "ball_visibility_percentage": 23.8,
+    "output_video_path": "C:\\Users\\MSI\\OneDrive\\Documents\\FootVision\\BackEnd\\Data\\processed\\annotated_0234d09b-6456-459f-b7f7-828f80562a13.mp4",
+    "telemetry_samples_count": 60
+  },
+  "frames": [
+    {
+      "frame_index": 3,
+      "timestamp": 0.1,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            424,
+            286,
+            450,
+            350
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            423,
+            346,
+            451,
+            415
+          ],
+          "conf": 0.8
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            250,
+            404,
+            293,
+            477
+          ],
+          "conf": 0.73
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            156,
+            273,
+            181,
+            334
+          ],
+          "conf": 0.67
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            65,
+            352,
+            101,
+            416
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 6,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            59,
+            255,
+            82,
+            304
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            519,
+            232,
+            547,
+            287
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 8,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            191,
+            225,
+            222,
+            269
+          ],
+          "conf": 0.64
+        },
+        {
+          "track_id": 9,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            306,
+            229,
+            328,
+            272
+          ],
+          "conf": 0.64
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            450,
+            214,
+            480,
+            257
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 11,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            279,
+            214,
+            301,
+            268
+          ],
+          "conf": 0.64
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            501,
+            194,
+            521,
+            220
+          ],
+          "conf": 0.44
+        },
+        {
+          "track_id": 13,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            155,
+            210,
+            180,
+            239
+          ],
+          "conf": 0.34
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 6,
+      "timestamp": 0.2,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            418,
+            285,
+            444,
+            347
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            257,
+            399,
+            300,
+            478
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            156,
+            273,
+            181,
+            335
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            77,
+            354,
+            112,
+            418
+          ],
+          "conf": 0.56
+        },
+        {
+          "track_id": 6,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            59,
+            255,
+            81,
+            303
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            513,
+            233,
+            541,
+            289
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 8,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            198,
+            222,
+            229,
+            268
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 9,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            291,
+            230,
+            312,
+            270
+          ],
+          "conf": 0.31
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            441,
+            215,
+            468,
+            254
+          ],
+          "conf": 0.44
+        },
+        {
+          "track_id": 11,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            272,
+            216,
+            294,
+            270
+          ],
+          "conf": 0.43
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            491,
+            194,
+            510,
+            220
+          ],
+          "conf": 0.42
+        },
+        {
+          "track_id": 13,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            144,
+            210,
+            169,
+            239
+          ],
+          "conf": 0.5
+        },
+        {
+          "track_id": 15,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            369,
+            192,
+            391,
+            240
+          ],
+          "conf": 0.56
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 9,
+      "timestamp": 0.3,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            413,
+            282,
+            438,
+            342
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            264,
+            397,
+            306,
+            473
+          ],
+          "conf": 0.86
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            155,
+            271,
+            181,
+            335
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            88,
+            352,
+            122,
+            418
+          ],
+          "conf": 0.65
+        },
+        {
+          "track_id": 6,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            60,
+            256,
+            83,
+            301
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            509,
+            231,
+            537,
+            289
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 8,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            206,
+            219,
+            237,
+            266
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            435,
+            217,
+            458,
+            251
+          ],
+          "conf": 0.56
+        },
+        {
+          "track_id": 11,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            278,
+            215,
+            300,
+            270
+          ],
+          "conf": 0.51
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            486,
+            193,
+            506,
+            220
+          ],
+          "conf": 0.51
+        },
+        {
+          "track_id": 13,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            138,
+            210,
+            163,
+            239
+          ],
+          "conf": 0.5
+        },
+        {
+          "track_id": 15,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            367,
+            191,
+            388,
+            239
+          ],
+          "conf": 0.48
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            431,
+            338,
+            461,
+            411
+          ],
+          "conf": 0.82
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 12,
+      "timestamp": 0.4,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            409,
+            279,
+            435,
+            342
+          ],
+          "conf": 0.73
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            274,
+            397,
+            313,
+            472
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            158,
+            267,
+            183,
+            328
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            103,
+            351,
+            138,
+            413
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 6,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            64,
+            256,
+            89,
+            303
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            509,
+            230,
+            537,
+            291
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 8,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            217,
+            219,
+            248,
+            269
+          ],
+          "conf": 0.64
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            426,
+            221,
+            447,
+            253
+          ],
+          "conf": 0.67
+        },
+        {
+          "track_id": 11,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            278,
+            221,
+            299,
+            270
+          ],
+          "conf": 0.59
+        },
+        {
+          "track_id": 13,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            132,
+            210,
+            158,
+            238
+          ],
+          "conf": 0.52
+        },
+        {
+          "track_id": 15,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            366,
+            190,
+            387,
+            239
+          ],
+          "conf": 0.42
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            439,
+            338,
+            467,
+            407
+          ],
+          "conf": 0.8
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 15,
+      "timestamp": 0.5,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            405,
+            280,
+            429,
+            338
+          ],
+          "conf": 0.67
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            285,
+            396,
+            323,
+            472
+          ],
+          "conf": 0.84
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            161,
+            264,
+            186,
+            326
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            115,
+            350,
+            151,
+            415
+          ],
+          "conf": 0.64
+        },
+        {
+          "track_id": 6,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            63,
+            256,
+            90,
+            302
+          ],
+          "conf": 0.73
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            508,
+            232,
+            535,
+            292
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 8,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            225,
+            226,
+            250,
+            268
+          ],
+          "conf": 0.49
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            418,
+            217,
+            440,
+            253
+          ],
+          "conf": 0.41
+        },
+        {
+          "track_id": 11,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            282,
+            229,
+            301,
+            270
+          ],
+          "conf": 0.44
+        },
+        {
+          "track_id": 13,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            127,
+            210,
+            153,
+            238
+          ],
+          "conf": 0.46
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            444,
+            337,
+            473,
+            406
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            476,
+            192,
+            496,
+            219
+          ],
+          "conf": 0.42
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 18,
+      "timestamp": 0.6,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            397,
+            282,
+            422,
+            335
+          ],
+          "conf": 0.77
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            290,
+            391,
+            329,
+            469
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            160,
+            263,
+            186,
+            322
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            123,
+            347,
+            159,
+            414
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 6,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            55,
+            255,
+            83,
+            302
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            502,
+            236,
+            530,
+            295
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 8,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            224,
+            216,
+            253,
+            269
+          ],
+          "conf": 0.67
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            410,
+            217,
+            431,
+            254
+          ],
+          "conf": 0.5
+        },
+        {
+          "track_id": 13,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            119,
+            209,
+            145,
+            238
+          ],
+          "conf": 0.47
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            447,
+            334,
+            475,
+            403
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            468,
+            191,
+            489,
+            219
+          ],
+          "conf": 0.5
+        },
+        {
+          "track_id": 15,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            357,
+            188,
+            380,
+            239
+          ],
+          "conf": 0.42
+        },
+        {
+          "track_id": 11,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            278,
+            225,
+            299,
+            270
+          ],
+          "conf": 0.51
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 21,
+      "timestamp": 0.7,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            393,
+            286,
+            418,
+            334
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            295,
+            392,
+            331,
+            464
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            159,
+            264,
+            184,
+            320
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            129,
+            344,
+            166,
+            411
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 6,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            46,
+            254,
+            75,
+            303
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            496,
+            237,
+            523,
+            296
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 8,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            224,
+            211,
+            252,
+            264
+          ],
+          "conf": 0.56
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            403,
+            208,
+            426,
+            254
+          ],
+          "conf": 0.61
+        },
+        {
+          "track_id": 13,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            111,
+            209,
+            137,
+            238
+          ],
+          "conf": 0.45
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            448,
+            332,
+            475,
+            400
+          ],
+          "conf": 0.85
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            461,
+            192,
+            483,
+            219
+          ],
+          "conf": 0.39
+        },
+        {
+          "track_id": 15,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            351,
+            188,
+            373,
+            239
+          ],
+          "conf": 0.52
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            272,
+            224,
+            293,
+            271
+          ],
+          "conf": 0.53
+        }
+      ],
+      "ball": {
+        "detected": true,
+        "center": [
+          225,
+          289
+        ],
+        "conf": 0.28
+      }
+    },
+    {
+      "frame_index": 24,
+      "timestamp": 0.8,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            382,
+            287,
+            408,
+            332
+          ],
+          "conf": 0.8
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            304,
+            390,
+            339,
+            463
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            153,
+            263,
+            178,
+            318
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            140,
+            344,
+            174,
+            408
+          ],
+          "conf": 0.66
+        },
+        {
+          "track_id": 6,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            31,
+            251,
+            63,
+            302
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            488,
+            235,
+            515,
+            296
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 8,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            226,
+            211,
+            253,
+            264
+          ],
+          "conf": 0.61
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            395,
+            211,
+            416,
+            253
+          ],
+          "conf": 0.63
+        },
+        {
+          "track_id": 13,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            101,
+            209,
+            127,
+            238
+          ],
+          "conf": 0.52
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            450,
+            326,
+            477,
+            398
+          ],
+          "conf": 0.8
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            452,
+            191,
+            474,
+            219
+          ],
+          "conf": 0.46
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            267,
+            228,
+            286,
+            271
+          ],
+          "conf": 0.61
+        },
+        {
+          "track_id": 28,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            294,
+            223,
+            314,
+            267
+          ],
+          "conf": 0.63
+        }
+      ],
+      "ball": {
+        "detected": true,
+        "center": [
+          219,
+          289
+        ],
+        "conf": 0.12
+      }
+    },
+    {
+      "frame_index": 27,
+      "timestamp": 0.9,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            376,
+            286,
+            403,
+            332
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            307,
+            387,
+            343,
+            464
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            153,
+            264,
+            178,
+            319
+          ],
+          "conf": 0.67
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            152,
+            353,
+            181,
+            409
+          ],
+          "conf": 0.62
+        },
+        {
+          "track_id": 6,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            20,
+            249,
+            52,
+            302
+          ],
+          "conf": 0.69
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            484,
+            235,
+            511,
+            296
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 8,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            231,
+            212,
+            257,
+            265
+          ],
+          "conf": 0.68
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            390,
+            214,
+            409,
+            254
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 13,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            95,
+            209,
+            121,
+            238
+          ],
+          "conf": 0.48
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            452,
+            324,
+            479,
+            395
+          ],
+          "conf": 0.87
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            447,
+            191,
+            468,
+            219
+          ],
+          "conf": 0.49
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            264,
+            230,
+            283,
+            273
+          ],
+          "conf": 0.69
+        },
+        {
+          "track_id": 28,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            297,
+            216,
+            321,
+            269
+          ],
+          "conf": 0.59
+        },
+        {
+          "track_id": 15,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            334,
+            189,
+            356,
+            241
+          ],
+          "conf": 0.5
+        }
+      ],
+      "ball": {
+        "detected": true,
+        "center": [
+          200,
+          300
+        ],
+        "conf": 0.27
+      }
+    },
+    {
+      "frame_index": 30,
+      "timestamp": 1.0,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            373,
+            283,
+            402,
+            331
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            315,
+            385,
+            351,
+            457
+          ],
+          "conf": 0.85
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            156,
+            264,
+            179,
+            315
+          ],
+          "conf": 0.67
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            162,
+            342,
+            197,
+            404
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 6,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            8,
+            247,
+            38,
+            301
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            485,
+            238,
+            512,
+            297
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 8,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            235,
+            213,
+            261,
+            263
+          ],
+          "conf": 0.69
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            387,
+            212,
+            407,
+            255
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 13,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            90,
+            209,
+            117,
+            238
+          ],
+          "conf": 0.49
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            458,
+            323,
+            485,
+            391
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            443,
+            191,
+            464,
+            219
+          ],
+          "conf": 0.43
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            265,
+            232,
+            283,
+            275
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 28,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            308,
+            233,
+            326,
+            268
+          ],
+          "conf": 0.59
+        }
+      ],
+      "ball": {
+        "detected": true,
+        "center": [
+          194,
+          300
+        ],
+        "conf": 0.11
+      }
+    },
+    {
+      "frame_index": 33,
+      "timestamp": 1.1,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            372,
+            280,
+            402,
+            330
+          ],
+          "conf": 0.8
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            325,
+            385,
+            363,
+            456
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            159,
+            263,
+            183,
+            313
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            171,
+            340,
+            208,
+            402
+          ],
+          "conf": 0.67
+        },
+        {
+          "track_id": 6,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            3,
+            246,
+            30,
+            300
+          ],
+          "conf": 0.68
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            486,
+            239,
+            515,
+            297
+          ],
+          "conf": 0.85
+        },
+        {
+          "track_id": 8,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            242,
+            212,
+            265,
+            261
+          ],
+          "conf": 0.62
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            387,
+            212,
+            407,
+            256
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 13,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            87,
+            207,
+            115,
+            237
+          ],
+          "conf": 0.53
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            466,
+            320,
+            492,
+            389
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            440,
+            190,
+            462,
+            218
+          ],
+          "conf": 0.44
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            267,
+            232,
+            285,
+            273
+          ],
+          "conf": 0.68
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            307,
+            226,
+            345,
+            266
+          ],
+          "conf": 0.56
+        },
+        {
+          "track_id": 15,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            327,
+            186,
+            350,
+            238
+          ],
+          "conf": 0.49
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 36,
+      "timestamp": 1.2,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            368,
+            276,
+            399,
+            331
+          ],
+          "conf": 0.73
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            340,
+            380,
+            378,
+            454
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            156,
+            262,
+            180,
+            312
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            190,
+            335,
+            225,
+            400
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 6,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            0,
+            247,
+            20,
+            296
+          ],
+          "conf": 0.45
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            482,
+            238,
+            512,
+            296
+          ],
+          "conf": 0.86
+        },
+        {
+          "track_id": 8,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            248,
+            209,
+            270,
+            259
+          ],
+          "conf": 0.6
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            387,
+            215,
+            405,
+            255
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            471,
+            317,
+            497,
+            383
+          ],
+          "conf": 0.77
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            437,
+            188,
+            458,
+            215
+          ],
+          "conf": 0.58
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            267,
+            230,
+            286,
+            273
+          ],
+          "conf": 0.62
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 39,
+      "timestamp": 1.3,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            358,
+            275,
+            392,
+            331
+          ],
+          "conf": 0.69
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            345,
+            377,
+            384,
+            450
+          ],
+          "conf": 0.85
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            154,
+            259,
+            178,
+            311
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            199,
+            329,
+            235,
+            395
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            479,
+            237,
+            510,
+            295
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 8,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            250,
+            207,
+            271,
+            255
+          ],
+          "conf": 0.6
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            385,
+            216,
+            404,
+            256
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            474,
+            317,
+            498,
+            380
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            433,
+            187,
+            455,
+            214
+          ],
+          "conf": 0.53
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            267,
+            229,
+            287,
+            274
+          ],
+          "conf": 0.6
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            333,
+            221,
+            372,
+            265
+          ],
+          "conf": 0.47
+        },
+        {
+          "track_id": 6,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            0,
+            244,
+            17,
+            296
+          ],
+          "conf": 0.46
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 42,
+      "timestamp": 1.4,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            346,
+            273,
+            384,
+            329
+          ],
+          "conf": 0.66
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            355,
+            374,
+            392,
+            446
+          ],
+          "conf": 0.77
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            152,
+            255,
+            177,
+            312
+          ],
+          "conf": 0.68
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            214,
+            328,
+            248,
+            389
+          ],
+          "conf": 0.69
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            483,
+            235,
+            512,
+            293
+          ],
+          "conf": 0.77
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            386,
+            215,
+            405,
+            256
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            475,
+            313,
+            501,
+            376
+          ],
+          "conf": 0.75
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            427,
+            184,
+            449,
+            212
+          ],
+          "conf": 0.54
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            264,
+            220,
+            287,
+            271
+          ],
+          "conf": 0.34
+        },
+        {
+          "track_id": 15,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            309,
+            180,
+            332,
+            234
+          ],
+          "conf": 0.51
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 45,
+      "timestamp": 1.5,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            337,
+            271,
+            375,
+            325
+          ],
+          "conf": 0.77
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            364,
+            373,
+            400,
+            446
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            152,
+            255,
+            176,
+            310
+          ],
+          "conf": 0.57
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            222,
+            325,
+            253,
+            388
+          ],
+          "conf": 0.64
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            486,
+            235,
+            513,
+            293
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 10,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            385,
+            214,
+            403,
+            254
+          ],
+          "conf": 0.59
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            480,
+            311,
+            508,
+            371
+          ],
+          "conf": 0.52
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            421,
+            183,
+            443,
+            211
+          ],
+          "conf": 0.5
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            262,
+            216,
+            285,
+            271
+          ],
+          "conf": 0.61
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            354,
+            220,
+            392,
+            265
+          ],
+          "conf": 0.48
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 48,
+      "timestamp": 1.6,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            320,
+            272,
+            356,
+            323
+          ],
+          "conf": 0.73
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            367,
+            369,
+            404,
+            442
+          ],
+          "conf": 0.85
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            147,
+            257,
+            171,
+            312
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            228,
+            321,
+            261,
+            385
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            485,
+            236,
+            510,
+            294
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            483,
+            308,
+            513,
+            368
+          ],
+          "conf": 0.6
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            411,
+            183,
+            432,
+            210
+          ],
+          "conf": 0.52
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            254,
+            207,
+            281,
+            275
+          ],
+          "conf": 0.69
+        },
+        {
+          "track_id": 15,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            292,
+            180,
+            313,
+            233
+          ],
+          "conf": 0.4
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            361,
+            214,
+            401,
+            264
+          ],
+          "conf": 0.78
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 51,
+      "timestamp": 1.7,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            305,
+            273,
+            339,
+            323
+          ],
+          "conf": 0.63
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            369,
+            369,
+            409,
+            440
+          ],
+          "conf": 0.88
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            140,
+            256,
+            164,
+            314
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            231,
+            322,
+            266,
+            382
+          ],
+          "conf": 0.85
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            484,
+            239,
+            508,
+            294
+          ],
+          "conf": 0.73
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            487,
+            306,
+            519,
+            363
+          ],
+          "conf": 0.68
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            402,
+            183,
+            423,
+            210
+          ],
+          "conf": 0.5
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            252,
+            216,
+            275,
+            277
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 15,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            285,
+            180,
+            304,
+            233
+          ],
+          "conf": 0.43
+        },
+        {
+          "track_id": 35,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            46,
+            201,
+            73,
+            229
+          ],
+          "conf": 0.34
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            366,
+            211,
+            405,
+            264
+          ],
+          "conf": 0.73
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 54,
+      "timestamp": 1.8,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            281,
+            271,
+            318,
+            321
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            370,
+            369,
+            410,
+            439
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            130,
+            257,
+            155,
+            318
+          ],
+          "conf": 0.8
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            233,
+            323,
+            268,
+            381
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            481,
+            240,
+            506,
+            296
+          ],
+          "conf": 0.87
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            494,
+            302,
+            525,
+            361
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            389,
+            183,
+            410,
+            210
+          ],
+          "conf": 0.51
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            245,
+            216,
+            268,
+            277
+          ],
+          "conf": 0.75
+        },
+        {
+          "track_id": 15,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            274,
+            185,
+            292,
+            234
+          ],
+          "conf": 0.55
+        },
+        {
+          "track_id": 35,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            32,
+            201,
+            60,
+            230
+          ],
+          "conf": 0.51
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            366,
+            213,
+            403,
+            267
+          ],
+          "conf": 0.62
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 57,
+      "timestamp": 1.9,
+      "tracks": [
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            264,
+            270,
+            303,
+            321
+          ],
+          "conf": 0.58
+        },
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            379,
+            367,
+            416,
+            440
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            124,
+            258,
+            149,
+            320
+          ],
+          "conf": 0.69
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            238,
+            320,
+            272,
+            382
+          ],
+          "conf": 0.73
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            479,
+            242,
+            506,
+            297
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            496,
+            299,
+            528,
+            361
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            381,
+            183,
+            403,
+            210
+          ],
+          "conf": 0.44
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            242,
+            219,
+            266,
+            278
+          ],
+          "conf": 0.66
+        },
+        {
+          "track_id": 15,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            269,
+            200,
+            283,
+            235
+          ],
+          "conf": 0.45
+        },
+        {
+          "track_id": 35,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            23,
+            201,
+            51,
+            230
+          ],
+          "conf": 0.31
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            370,
+            214,
+            404,
+            269
+          ],
+          "conf": 0.56
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 60,
+      "timestamp": 2.0,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            387,
+            367,
+            419,
+            437
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            121,
+            259,
+            146,
+            323
+          ],
+          "conf": 0.47
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            249,
+            319,
+            278,
+            376
+          ],
+          "conf": 0.58
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            481,
+            243,
+            508,
+            297
+          ],
+          "conf": 0.8
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            510,
+            297,
+            539,
+            352
+          ],
+          "conf": 0.5
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            374,
+            182,
+            395,
+            209
+          ],
+          "conf": 0.51
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            238,
+            227,
+            259,
+            280
+          ],
+          "conf": 0.34
+        },
+        {
+          "track_id": 35,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            16,
+            201,
+            44,
+            229
+          ],
+          "conf": 0.34
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            380,
+            215,
+            415,
+            270
+          ],
+          "conf": 0.45
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            255,
+            215,
+            272,
+            257
+          ],
+          "conf": 0.59
+        },
+        {
+          "track_id": 39,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            365,
+            215,
+            383,
+            266
+          ],
+          "conf": 0.61
+        },
+        {
+          "track_id": 40,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            686,
+            164,
+            705,
+            190
+          ],
+          "conf": 0.45
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 63,
+      "timestamp": 2.1,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            397,
+            369,
+            427,
+            432
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            118,
+            259,
+            144,
+            324
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            260,
+            327,
+            286,
+            375
+          ],
+          "conf": 0.68
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            484,
+            242,
+            510,
+            299
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            516,
+            298,
+            544,
+            353
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            369,
+            182,
+            391,
+            209
+          ],
+          "conf": 0.47
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            237,
+            229,
+            256,
+            280
+          ],
+          "conf": 0.61
+        },
+        {
+          "track_id": 35,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            13,
+            200,
+            41,
+            229
+          ],
+          "conf": 0.46
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            388,
+            217,
+            420,
+            273
+          ],
+          "conf": 0.75
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            257,
+            216,
+            274,
+            259
+          ],
+          "conf": 0.63
+        },
+        {
+          "track_id": 39,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            366,
+            214,
+            384,
+            265
+          ],
+          "conf": 0.65
+        },
+        {
+          "track_id": 40,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            682,
+            163,
+            701,
+            190
+          ],
+          "conf": 0.39
+        },
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            230,
+            273,
+            264,
+            322
+          ],
+          "conf": 0.59
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 66,
+      "timestamp": 2.2,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            403,
+            367,
+            437,
+            432
+          ],
+          "conf": 0.87
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            118,
+            260,
+            145,
+            325
+          ],
+          "conf": 0.75
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            268,
+            321,
+            299,
+            372
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            487,
+            244,
+            513,
+            302
+          ],
+          "conf": 0.75
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            525,
+            298,
+            552,
+            350
+          ],
+          "conf": 0.69
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            363,
+            180,
+            385,
+            208
+          ],
+          "conf": 0.46
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            235,
+            228,
+            255,
+            281
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 35,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            8,
+            199,
+            35,
+            228
+          ],
+          "conf": 0.45
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            394,
+            216,
+            424,
+            272
+          ],
+          "conf": 0.69
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            256,
+            207,
+            275,
+            256
+          ],
+          "conf": 0.57
+        },
+        {
+          "track_id": 39,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            367,
+            214,
+            386,
+            268
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 40,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            674,
+            162,
+            693,
+            188
+          ],
+          "conf": 0.36
+        },
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            208,
+            269,
+            245,
+            320
+          ],
+          "conf": 0.72
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 69,
+      "timestamp": 2.3,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            401,
+            365,
+            438,
+            431
+          ],
+          "conf": 0.86
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            116,
+            261,
+            141,
+            325
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            268,
+            319,
+            301,
+            372
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            490,
+            245,
+            514,
+            302
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            531,
+            296,
+            560,
+            348
+          ],
+          "conf": 0.66
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            358,
+            180,
+            379,
+            208
+          ],
+          "conf": 0.52
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            234,
+            230,
+            254,
+            286
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 35,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            4,
+            198,
+            32,
+            228
+          ],
+          "conf": 0.53
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            400,
+            215,
+            431,
+            273
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            256,
+            205,
+            275,
+            256
+          ],
+          "conf": 0.66
+        },
+        {
+          "track_id": 39,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            368,
+            216,
+            387,
+            271
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 40,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            668,
+            161,
+            687,
+            188
+          ],
+          "conf": 0.36
+        },
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            188,
+            270,
+            226,
+            322
+          ],
+          "conf": 0.57
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 72,
+      "timestamp": 2.4,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            406,
+            363,
+            441,
+            429
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            113,
+            265,
+            138,
+            327
+          ],
+          "conf": 0.8
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            270,
+            315,
+            303,
+            371
+          ],
+          "conf": 0.66
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            489,
+            243,
+            515,
+            304
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            527,
+            295,
+            559,
+            347
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            351,
+            181,
+            371,
+            207
+          ],
+          "conf": 0.49
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            233,
+            233,
+            252,
+            287
+          ],
+          "conf": 0.75
+        },
+        {
+          "track_id": 35,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            0,
+            199,
+            25,
+            228
+          ],
+          "conf": 0.59
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            404,
+            219,
+            434,
+            276
+          ],
+          "conf": 0.73
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            256,
+            204,
+            276,
+            258
+          ],
+          "conf": 0.65
+        },
+        {
+          "track_id": 39,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            368,
+            217,
+            386,
+            270
+          ],
+          "conf": 0.69
+        },
+        {
+          "track_id": 40,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            658,
+            161,
+            677,
+            187
+          ],
+          "conf": 0.36
+        },
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            166,
+            275,
+            201,
+            325
+          ],
+          "conf": 0.67
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 75,
+      "timestamp": 2.5,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            408,
+            362,
+            441,
+            431
+          ],
+          "conf": 0.8
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            111,
+            268,
+            135,
+            328
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            272,
+            314,
+            302,
+            369
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            488,
+            245,
+            513,
+            306
+          ],
+          "conf": 0.73
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            527,
+            294,
+            558,
+            347
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            343,
+            181,
+            364,
+            208
+          ],
+          "conf": 0.48
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            229,
+            234,
+            249,
+            288
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 35,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            0,
+            199,
+            21,
+            227
+          ],
+          "conf": 0.33
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            404,
+            220,
+            432,
+            277
+          ],
+          "conf": 0.8
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            254,
+            209,
+            273,
+            260
+          ],
+          "conf": 0.56
+        },
+        {
+          "track_id": 39,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            365,
+            217,
+            384,
+            272
+          ],
+          "conf": 0.65
+        },
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            151,
+            277,
+            187,
+            326
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 40,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            649,
+            162,
+            668,
+            188
+          ],
+          "conf": 0.47
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 78,
+      "timestamp": 2.6,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            402,
+            365,
+            433,
+            432
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            96,
+            269,
+            121,
+            329
+          ],
+          "conf": 0.67
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            265,
+            313,
+            295,
+            371
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            474,
+            248,
+            499,
+            309
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            516,
+            291,
+            547,
+            346
+          ],
+          "conf": 0.68
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            323,
+            181,
+            344,
+            208
+          ],
+          "conf": 0.51
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            214,
+            236,
+            233,
+            291
+          ],
+          "conf": 0.65
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            397,
+            222,
+            424,
+            279
+          ],
+          "conf": 0.77
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            240,
+            210,
+            259,
+            261
+          ],
+          "conf": 0.42
+        },
+        {
+          "track_id": 39,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            351,
+            220,
+            371,
+            277
+          ],
+          "conf": 0.69
+        },
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            118,
+            279,
+            160,
+            332
+          ],
+          "conf": 0.52
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 81,
+      "timestamp": 2.7,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            391,
+            368,
+            422,
+            433
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            80,
+            269,
+            106,
+            331
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            254,
+            318,
+            283,
+            372
+          ],
+          "conf": 0.57
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            458,
+            248,
+            484,
+            309
+          ],
+          "conf": 0.85
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            505,
+            291,
+            536,
+            346
+          ],
+          "conf": 0.59
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            303,
+            182,
+            324,
+            209
+          ],
+          "conf": 0.48
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            199,
+            240,
+            218,
+            293
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            384,
+            224,
+            411,
+            283
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            227,
+            216,
+            245,
+            262
+          ],
+          "conf": 0.64
+        },
+        {
+          "track_id": 39,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            339,
+            224,
+            357,
+            277
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            90,
+            282,
+            131,
+            333
+          ],
+          "conf": 0.66
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 84,
+      "timestamp": 2.8,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            374,
+            369,
+            405,
+            432
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            239,
+            319,
+            267,
+            374
+          ],
+          "conf": 0.75
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            443,
+            250,
+            468,
+            311
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            492,
+            293,
+            522,
+            346
+          ],
+          "conf": 0.49
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            279,
+            183,
+            300,
+            209
+          ],
+          "conf": 0.49
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            183,
+            239,
+            201,
+            292
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            368,
+            225,
+            394,
+            282
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            209,
+            215,
+            228,
+            263
+          ],
+          "conf": 0.56
+        },
+        {
+          "track_id": 39,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            322,
+            224,
+            341,
+            277
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            70,
+            283,
+            105,
+            329
+          ],
+          "conf": 0.51
+        },
+        {
+          "track_id": 4,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            64,
+            271,
+            89,
+            332
+          ],
+          "conf": 0.64
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 87,
+      "timestamp": 2.9,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            354,
+            371,
+            383,
+            432
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            219,
+            317,
+            247,
+            372
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            426,
+            253,
+            451,
+            315
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            472,
+            293,
+            503,
+            346
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 12,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            256,
+            182,
+            276,
+            209
+          ],
+          "conf": 0.37
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            163,
+            238,
+            183,
+            295
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            351,
+            224,
+            377,
+            284
+          ],
+          "conf": 0.77
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            189,
+            214,
+            208,
+            261
+          ],
+          "conf": 0.62
+        },
+        {
+          "track_id": 39,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            304,
+            224,
+            323,
+            279
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            40,
+            284,
+            79,
+            336
+          ],
+          "conf": 0.37
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 90,
+      "timestamp": 3.0,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            327,
+            371,
+            356,
+            434
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            196,
+            313,
+            223,
+            373
+          ],
+          "conf": 0.77
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            401,
+            255,
+            426,
+            314
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            445,
+            292,
+            475,
+            346
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            139,
+            242,
+            158,
+            297
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            328,
+            227,
+            353,
+            286
+          ],
+          "conf": 0.52
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            164,
+            211,
+            183,
+            262
+          ],
+          "conf": 0.68
+        },
+        {
+          "track_id": 39,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            281,
+            228,
+            300,
+            282
+          ],
+          "conf": 0.77
+        },
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            12,
+            286,
+            49,
+            336
+          ],
+          "conf": 0.44
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 93,
+      "timestamp": 3.1,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            303,
+            372,
+            329,
+            436
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            172,
+            314,
+            197,
+            374
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            374,
+            255,
+            399,
+            314
+          ],
+          "conf": 0.77
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            423,
+            294,
+            449,
+            342
+          ],
+          "conf": 0.75
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            113,
+            243,
+            132,
+            296
+          ],
+          "conf": 0.64
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            303,
+            229,
+            327,
+            287
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            136,
+            210,
+            156,
+            262
+          ],
+          "conf": 0.66
+        },
+        {
+          "track_id": 1,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            0,
+            285,
+            29,
+            336
+          ],
+          "conf": 0.33
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 96,
+      "timestamp": 3.2,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            272,
+            374,
+            296,
+            433
+          ],
+          "conf": 0.75
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            140,
+            315,
+            166,
+            374
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            346,
+            257,
+            371,
+            317
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            390,
+            292,
+            418,
+            345
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            80,
+            241,
+            100,
+            296
+          ],
+          "conf": 0.6
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            274,
+            227,
+            298,
+            287
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            104,
+            206,
+            126,
+            262
+          ],
+          "conf": 0.54
+        },
+        {
+          "track_id": 64,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            0,
+            271,
+            19,
+            316
+          ],
+          "conf": 0.49
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 99,
+      "timestamp": 3.3,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            241,
+            373,
+            269,
+            436
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            113,
+            315,
+            139,
+            373
+          ],
+          "conf": 0.75
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            319,
+            258,
+            343,
+            315
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            363,
+            291,
+            390,
+            344
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            51,
+            241,
+            72,
+            297
+          ],
+          "conf": 0.66
+        },
+        {
+          "track_id": 32,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            244,
+            225,
+            267,
+            286
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            75,
+            199,
+            98,
+            259
+          ],
+          "conf": 0.59
+        },
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            682,
+            341,
+            700,
+            396
+          ],
+          "conf": 0.45
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 102,
+      "timestamp": 3.4,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            211,
+            373,
+            240,
+            437
+          ],
+          "conf": 0.8
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            79,
+            312,
+            106,
+            371
+          ],
+          "conf": 0.67
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            294,
+            256,
+            319,
+            315
+          ],
+          "conf": 0.73
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            335,
+            291,
+            358,
+            335
+          ],
+          "conf": 0.65
+        },
+        {
+          "track_id": 11,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            17,
+            242,
+            37,
+            295
+          ],
+          "conf": 0.68
+        },
+        {
+          "track_id": 38,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            40,
+            206,
+            60,
+            253
+          ],
+          "conf": 0.42
+        },
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            650,
+            337,
+            673,
+            403
+          ],
+          "conf": 0.49
+        },
+        {
+          "track_id": 74,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            210,
+            226,
+            229,
+            285
+          ],
+          "conf": 0.75
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 105,
+      "timestamp": 3.5,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            183,
+            372,
+            213,
+            435
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            50,
+            312,
+            77,
+            370
+          ],
+          "conf": 0.64
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            266,
+            256,
+            292,
+            315
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            308,
+            288,
+            334,
+            339
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            629,
+            337,
+            652,
+            403
+          ],
+          "conf": 0.57
+        },
+        {
+          "track_id": 39,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            182,
+            224,
+            203,
+            282
+          ],
+          "conf": 0.7
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 108,
+      "timestamp": 3.6,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            154,
+            367,
+            187,
+            433
+          ],
+          "conf": 0.64
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            21,
+            309,
+            44,
+            357
+          ],
+          "conf": 0.63
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            232,
+            253,
+            259,
+            309
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 2,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            273,
+            284,
+            304,
+            340
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            602,
+            334,
+            624,
+            396
+          ],
+          "conf": 0.57
+        },
+        {
+          "track_id": 89,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            142,
+            220,
+            169,
+            279
+          ],
+          "conf": 0.74
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 111,
+      "timestamp": 3.7,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            127,
+            366,
+            160,
+            434
+          ],
+          "conf": 0.67
+        },
+        {
+          "track_id": 5,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            0,
+            306,
+            22,
+            364
+          ],
+          "conf": 0.5
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            206,
+            250,
+            237,
+            306
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            253,
+            282,
+            280,
+            334
+          ],
+          "conf": 0.75
+        },
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            579,
+            329,
+            603,
+            398
+          ],
+          "conf": 0.66
+        },
+        {
+          "track_id": 89,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            115,
+            218,
+            142,
+            279
+          ],
+          "conf": 0.62
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 114,
+      "timestamp": 3.8,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            95,
+            363,
+            129,
+            429
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            183,
+            246,
+            214,
+            305
+          ],
+          "conf": 0.56
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            217,
+            275,
+            249,
+            334
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            550,
+            327,
+            575,
+            396
+          ],
+          "conf": 0.69
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 117,
+      "timestamp": 3.9,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            66,
+            359,
+            103,
+            427
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 7,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            158,
+            244,
+            190,
+            301
+          ],
+          "conf": 0.61
+        },
+        {
+          "track_id": 2,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            192,
+            273,
+            222,
+            331
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            521,
+            325,
+            549,
+            391
+          ],
+          "conf": 0.54
+        },
+        {
+          "track_id": 123,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            49,
+            211,
+            75,
+            271
+          ],
+          "conf": 0.75
+        }
+      ],
+      "ball": {
+        "detected": true,
+        "center": [
+          420,
+          298
+        ],
+        "conf": 0.41
+      }
+    },
+    {
+      "frame_index": 120,
+      "timestamp": 4.0,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            43,
+            361,
+            82,
+            430
+          ],
+          "conf": 0.48
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            141,
+            243,
+            172,
+            302
+          ],
+          "conf": 0.54
+        },
+        {
+          "track_id": 2,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            164,
+            272,
+            193,
+            329
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            491,
+            324,
+            524,
+            393
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 123,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            19,
+            212,
+            43,
+            269
+          ],
+          "conf": 0.56
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            680,
+            240,
+            694,
+            302
+          ],
+          "conf": 0.81
+        }
+      ],
+      "ball": {
+        "detected": true,
+        "center": [
+          426,
+          304
+        ],
+        "conf": 0.17
+      }
+    },
+    {
+      "frame_index": 123,
+      "timestamp": 4.1,
+      "tracks": [
+        {
+          "track_id": 3,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            25,
+            363,
+            63,
+            432
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            118,
+            247,
+            147,
+            305
+          ],
+          "conf": 0.63
+        },
+        {
+          "track_id": 2,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            136,
+            273,
+            168,
+            334
+          ],
+          "conf": 0.64
+        },
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            476,
+            327,
+            510,
+            396
+          ],
+          "conf": 0.56
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            647,
+            243,
+            664,
+            305
+          ],
+          "conf": 0.81
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 126,
+      "timestamp": 4.2,
+      "tracks": [
+        {
+          "track_id": 7,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            92,
+            247,
+            122,
+            305
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 2,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            117,
+            278,
+            146,
+            339
+          ],
+          "conf": 0.6
+        },
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            453,
+            328,
+            488,
+            397
+          ],
+          "conf": 0.77
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            608,
+            243,
+            629,
+            305
+          ],
+          "conf": 0.81
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 129,
+      "timestamp": 4.3,
+      "tracks": [
+        {
+          "track_id": 2,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            97,
+            280,
+            122,
+            336
+          ],
+          "conf": 0.38
+        },
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            440,
+            328,
+            477,
+            399
+          ],
+          "conf": 0.54
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            579,
+            242,
+            602,
+            305
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 141,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            6,
+            366,
+            32,
+            437
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 143,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            87,
+            249,
+            111,
+            293
+          ],
+          "conf": 0.48
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 132,
+      "timestamp": 4.4,
+      "tracks": [
+        {
+          "track_id": 2,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            71,
+            283,
+            98,
+            342
+          ],
+          "conf": 0.49
+        },
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            428,
+            333,
+            461,
+            403
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            546,
+            239,
+            570,
+            305
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 141,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            0,
+            369,
+            17,
+            423
+          ],
+          "conf": 0.66
+        },
+        {
+          "track_id": 143,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            71,
+            252,
+            97,
+            300
+          ],
+          "conf": 0.32
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 135,
+      "timestamp": 4.5,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            407,
+            335,
+            439,
+            403
+          ],
+          "conf": 0.76
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            516,
+            241,
+            540,
+            305
+          ],
+          "conf": 0.8
+        },
+        {
+          "track_id": 143,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            53,
+            253,
+            77,
+            298
+          ],
+          "conf": 0.32
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 138,
+      "timestamp": 4.6,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            394,
+            336,
+            428,
+            404
+          ],
+          "conf": 0.69
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            482,
+            247,
+            507,
+            307
+          ],
+          "conf": 0.8
+        },
+        {
+          "track_id": 143,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            32,
+            255,
+            64,
+            320
+          ],
+          "conf": 0.51
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 141,
+      "timestamp": 4.7,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            381,
+            337,
+            416,
+            407
+          ],
+          "conf": 0.68
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            455,
+            250,
+            482,
+            308
+          ],
+          "conf": 0.84
+        },
+        {
+          "track_id": 143,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            18,
+            258,
+            50,
+            326
+          ],
+          "conf": 0.53
+        }
+      ],
+      "ball": {
+        "detected": true,
+        "center": [
+          567,
+          397
+        ],
+        "conf": 0.44
+      }
+    },
+    {
+      "frame_index": 144,
+      "timestamp": 4.8,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            367,
+            337,
+            401,
+            403
+          ],
+          "conf": 0.75
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            423,
+            251,
+            451,
+            308
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 143,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            0,
+            257,
+            38,
+            349
+          ],
+          "conf": 0.62
+        }
+      ],
+      "ball": {
+        "detected": true,
+        "center": [
+          576,
+          403
+        ],
+        "conf": 0.19
+      }
+    },
+    {
+      "frame_index": 147,
+      "timestamp": 4.9,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            361,
+            337,
+            397,
+            406
+          ],
+          "conf": 0.7
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            395,
+            250,
+            425,
+            307
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 143,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            0,
+            257,
+            25,
+            323
+          ],
+          "conf": 0.75
+        }
+      ],
+      "ball": {
+        "detected": true,
+        "center": [
+          588,
+          380
+        ],
+        "conf": 0.43
+      }
+    },
+    {
+      "frame_index": 150,
+      "timestamp": 5.0,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            356,
+            341,
+            387,
+            406
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            361,
+            246,
+            393,
+            305
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 143,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            0,
+            258,
+            19,
+            321
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 171,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            692,
+            404,
+            720,
+            479
+          ],
+          "conf": 0.74
+        }
+      ],
+      "ball": {
+        "detected": true,
+        "center": [
+          594,
+          380
+        ],
+        "conf": 0.18
+      }
+    },
+    {
+      "frame_index": 153,
+      "timestamp": 5.1,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            345,
+            336,
+            377,
+            403
+          ],
+          "conf": 0.77
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            333,
+            242,
+            367,
+            303
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 171,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            687,
+            396,
+            717,
+            476
+          ],
+          "conf": 0.66
+        }
+      ],
+      "ball": {
+        "detected": true,
+        "center": [
+          615,
+          383
+        ],
+        "conf": 0.66
+      }
+    },
+    {
+      "frame_index": 156,
+      "timestamp": 5.2,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            344,
+            335,
+            378,
+            401
+          ],
+          "conf": 0.59
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            303,
+            241,
+            336,
+            300
+          ],
+          "conf": 0.8
+        },
+        {
+          "track_id": 171,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            676,
+            387,
+            706,
+            463
+          ],
+          "conf": 0.8
+        }
+      ],
+      "ball": {
+        "detected": true,
+        "center": [
+          629,
+          388
+        ],
+        "conf": 0.35
+      }
+    },
+    {
+      "frame_index": 159,
+      "timestamp": 5.3,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            341,
+            336,
+            374,
+            405
+          ],
+          "conf": 0.67
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            279,
+            240,
+            313,
+            300
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 171,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            662,
+            382,
+            690,
+            454
+          ],
+          "conf": 0.78
+        }
+      ],
+      "ball": {
+        "detected": true,
+        "center": [
+          641,
+          391
+        ],
+        "conf": 0.15
+      }
+    },
+    {
+      "frame_index": 162,
+      "timestamp": 5.4,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            337,
+            334,
+            368,
+            404
+          ],
+          "conf": 0.68
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            256,
+            243,
+            290,
+            300
+          ],
+          "conf": 0.84
+        },
+        {
+          "track_id": 171,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            656,
+            382,
+            686,
+            455
+          ],
+          "conf": 0.77
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 165,
+      "timestamp": 5.5,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            337,
+            335,
+            368,
+            401
+          ],
+          "conf": 0.63
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            237,
+            243,
+            271,
+            299
+          ],
+          "conf": 0.86
+        },
+        {
+          "track_id": 171,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            649,
+            385,
+            679,
+            460
+          ],
+          "conf": 0.81
+        },
+        {
+          "track_id": 204,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            637,
+            305,
+            661,
+            339
+          ],
+          "conf": 0.58
+        },
+        {
+          "track_id": 205,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            633,
+            692,
+            665,
+            719
+          ],
+          "conf": 0.64
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 168,
+      "timestamp": 5.6,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            345,
+            337,
+            376,
+            405
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            215,
+            239,
+            250,
+            299
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 171,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            647,
+            393,
+            677,
+            463
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 204,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            614,
+            305,
+            638,
+            338
+          ],
+          "conf": 0.57
+        },
+        {
+          "track_id": 205,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            609,
+            690,
+            643,
+            719
+          ],
+          "conf": 0.72
+        },
+        {
+          "track_id": 209,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            695,
+            323,
+            708,
+            385
+          ],
+          "conf": 0.68
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 171,
+      "timestamp": 5.7,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            346,
+            337,
+            376,
+            407
+          ],
+          "conf": 0.57
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            196,
+            239,
+            229,
+            298
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 171,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            643,
+            397,
+            676,
+            461
+          ],
+          "conf": 0.78
+        },
+        {
+          "track_id": 204,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            596,
+            305,
+            619,
+            337
+          ],
+          "conf": 0.6
+        },
+        {
+          "track_id": 205,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            590,
+            688,
+            625,
+            719
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 209,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            675,
+            322,
+            691,
+            385
+          ],
+          "conf": 0.73
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 174,
+      "timestamp": 5.8,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            351,
+            336,
+            383,
+            405
+          ],
+          "conf": 0.44
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            176,
+            239,
+            209,
+            299
+          ],
+          "conf": 0.83
+        },
+        {
+          "track_id": 171,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            630,
+            400,
+            665,
+            462
+          ],
+          "conf": 0.82
+        },
+        {
+          "track_id": 204,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            576,
+            304,
+            600,
+            337
+          ],
+          "conf": 0.59
+        },
+        {
+          "track_id": 205,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            571,
+            686,
+            607,
+            719
+          ],
+          "conf": 0.68
+        },
+        {
+          "track_id": 209,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            651,
+            322,
+            670,
+            384
+          ],
+          "conf": 0.78
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 177,
+      "timestamp": 5.9,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            353,
+            338,
+            388,
+            407
+          ],
+          "conf": 0.64
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            161,
+            239,
+            192,
+            299
+          ],
+          "conf": 0.84
+        },
+        {
+          "track_id": 171,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            611,
+            398,
+            649,
+            460
+          ],
+          "conf": 0.85
+        },
+        {
+          "track_id": 204,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            560,
+            304,
+            584,
+            337
+          ],
+          "conf": 0.64
+        },
+        {
+          "track_id": 205,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            554,
+            685,
+            590,
+            719
+          ],
+          "conf": 0.71
+        },
+        {
+          "track_id": 209,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            631,
+            321,
+            654,
+            384
+          ],
+          "conf": 0.81
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    },
+    {
+      "frame_index": 180,
+      "timestamp": 6.0,
+      "tracks": [
+        {
+          "track_id": 70,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            360,
+            342,
+            392,
+            408
+          ],
+          "conf": 0.74
+        },
+        {
+          "track_id": 131,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            150,
+            238,
+            181,
+            299
+          ],
+          "conf": 0.85
+        },
+        {
+          "track_id": 171,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            590,
+            390,
+            634,
+            458
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 204,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            546,
+            304,
+            570,
+            337
+          ],
+          "conf": 0.55
+        },
+        {
+          "track_id": 205,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            542,
+            684,
+            578,
+            719
+          ],
+          "conf": 0.75
+        },
+        {
+          "track_id": 209,
+          "team": "REFEREE",
+          "is_referee": true,
+          "bbox": [
+            614,
+            321,
+            640,
+            383
+          ],
+          "conf": 0.79
+        },
+        {
+          "track_id": 244,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            701,
+            650,
+            717,
+            699
+          ],
+          "conf": 0.31
+        },
+        {
+          "track_id": 245,
+          "team": "Team A",
+          "is_referee": false,
+          "bbox": [
+            18,
+            195,
+            31,
+            222
+          ],
+          "conf": 0.4
+        },
+        {
+          "track_id": 246,
+          "team": "Team B",
+          "is_referee": false,
+          "bbox": [
+            705,
+            295,
+            718,
+            332
+          ],
+          "conf": 0.58
+        }
+      ],
+      "ball": {
+        "detected": false,
+        "center": null,
+        "conf": 0.0
+      }
+    }
+  ]
+}
