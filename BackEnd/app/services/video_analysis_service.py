@@ -192,23 +192,16 @@ class VideoAnalysisPipeline:
                                 "cls_id": cls_id,
                             })
 
-                # Pitch filtering: keep only persons with feet inside the pitch
-                on_pitch_tracks = []
-                for pt in person_tracks:
-                    foot = ((pt["xyxy"][0] + pt["xyxy"][2]) // 2, pt["xyxy"][3])
-                    if pitch_filter.polygon is not None:
-                        dist = cv2.pointPolygonTest(
-                            pitch_filter.polygon,
-                            (float(foot[0]), float(foot[1])),
-                            measureDist=True,
-                        )
-                        if dist >= -pitch_filter.margin:
-                            on_pitch_tracks.append(pt)
-                    else:
-                        on_pitch_tracks.append(pt)
+                # Pitch filtering: keep only valid players with feet on the pitch (rejects TV logos, scoreboards, stands)
+                on_pitch_tracks = pitch_filter.filter(person_tracks, frame_shape=(height, width))
 
-                # Referee identification
-                ref_map = referee_detector.identify_referees(frame, on_pitch_tracks)
+                # Referee identification with kit separation against team kit colors
+                ref_map = referee_detector.identify_referees(
+                    frame=frame,
+                    tracks=on_pitch_tracks,
+                    centroid_a=team_classifier.centroid_a,
+                    centroid_b=team_classifier.centroid_b,
+                )
 
                 # Team classification
                 for pt in on_pitch_tracks:
@@ -218,7 +211,8 @@ class VideoAnalysisPipeline:
                     pt["is_referee"] = is_ref
 
                     if is_ref:
-                        referee_ids.add(tid)
+                        if referee_detector.confirmed_referee_id == tid:
+                            referee_ids.add(tid)
                         pt["classification"] = {
                             "team": "REFEREE",
                             "label": "REFEREE",
@@ -239,9 +233,14 @@ class VideoAnalysisPipeline:
                         elif classification["team"] == "Team B":
                             team_b_ids.add(tid)
 
-                # Ball tracking update
+                # Ball tracking update with pitch constraint and overlay rejection
                 player_boxes = [t["xyxy"] for t in on_pitch_tracks]
-                ball_info = ball_tracker.update(ball_detections, player_boxes, frame.shape)
+                ball_info = ball_tracker.update(
+                    ball_detections=ball_detections,
+                    player_bboxes=player_boxes,
+                    frame_shape=(height, width),
+                    pitch_polygon=pitch_filter.polygon,
+                )
                 if ball_info and ball_info.get("detected"):
                     ball_detected_count += 1
 

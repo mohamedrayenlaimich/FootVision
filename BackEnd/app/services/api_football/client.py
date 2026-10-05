@@ -1,10 +1,16 @@
+import asyncio
 import logging
-from typing import Any, Dict, Optional
+import time
+from typing import Any, Dict, Optional, Tuple
 import httpx
 
 from app.core.config import settings
 
 logger = logging.getLogger(__name__)
+
+# Simple in-process TTL cache shared across client instances: key -> (expires_at, data)
+_CACHE: Dict[str, Tuple[float, Dict[str, Any]]] = {}
+_CACHE_MAX_ENTRIES = 500
 
 
 class APIFootballError(Exception):
@@ -47,10 +53,41 @@ class APIFootballClient:
         api_key: Optional[str] = None,
         base_url: Optional[str] = None,
         timeout: float = 12.0,
+        max_retries: int = 2,
+        cache_ttl: float = 60.0,
     ):
         self.api_key = api_key or settings.API_FOOTBALL_KEY
         self.base_url = (base_url or settings.API_FOOTBALL_BASE_URL).rstrip("/")
         self.timeout = timeout
+        self.max_retries = max_retries
+        self.cache_ttl = cache_ttl
+
+    @staticmethod
+    def _is_retryable(err: Exception) -> bool:
+        if isinstance(err, APIFootballTimeoutError):
+            return True
+        if isinstance(err, APIFootballRateLimitError):
+            return False
+        status = getattr(err, "status_code", None)
+        # Network errors have no status code; 5xx are transient server errors.
+        return isinstance(err, APIFootballError) and (status is None or status >= 500)
+
+    def _cache_key(self, endpoint: str, params: Optional[Dict[str, Any]]) -> str:
+        return f"{self.base_url}|{endpoint}|{sorted((params or {}).items())}"
+
+    def _cache_get(self, key: str) -> Optional[Dict[str, Any]]:
+        entry = _CACHE.get(key)
+        if entry and entry[0] > time.monotonic():
+            return entry[1]
+        _CACHE.pop(key, None)
+        return None
+
+    def _cache_set(self, key: str, data: Dict[str, Any]) -> None:
+        if self.cache_ttl <= 0:
+            return
+        if len(_CACHE) >= _CACHE_MAX_ENTRIES:
+            _CACHE.pop(next(iter(_CACHE)), None)
+        _CACHE[key] = (time.monotonic() + self.cache_ttl, data)
 
     def _get_headers(self) -> Dict[str, str]:
         headers = {
@@ -65,8 +102,25 @@ class APIFootballClient:
 
     async def get(self, endpoint: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
-        Asynchronously fetch data from API-Football.
+        Asynchronously fetch data from API-Football (cached, with retries on transient errors).
         """
+        key = self._cache_key(endpoint, params)
+        cached = self._cache_get(key)
+        if cached is not None:
+            return cached
+        for attempt in range(self.max_retries + 1):
+            try:
+                data = await self._get_once(endpoint, params)
+                self._cache_set(key, data)
+                return data
+            except APIFootballError as err:
+                if attempt >= self.max_retries or not self._is_retryable(err):
+                    raise
+                delay = 0.5 * (2 ** attempt)
+                logger.warning(f"API-Football transient error, retrying in {delay}s: {err}")
+                await asyncio.sleep(delay)
+
+    async def _get_once(self, endpoint: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         if not self.api_key or self.api_key == "your_api_football_key_here":
             logger.warning("API_FOOTBALL_KEY is unconfigured or placeholder.")
 
@@ -86,8 +140,25 @@ class APIFootballClient:
 
     def get_sync(self, endpoint: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         """
-        Synchronously fetch data from API-Football.
+        Synchronously fetch data from API-Football (cached, with retries on transient errors).
         """
+        key = self._cache_key(endpoint, params)
+        cached = self._cache_get(key)
+        if cached is not None:
+            return cached
+        for attempt in range(self.max_retries + 1):
+            try:
+                data = self._get_sync_once(endpoint, params)
+                self._cache_set(key, data)
+                return data
+            except APIFootballError as err:
+                if attempt >= self.max_retries or not self._is_retryable(err):
+                    raise
+                delay = 0.5 * (2 ** attempt)
+                logger.warning(f"API-Football transient error, retrying in {delay}s: {err}")
+                time.sleep(delay)
+
+    def _get_sync_once(self, endpoint: str, params: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
         if not self.api_key or self.api_key == "your_api_football_key_here":
             logger.warning("API_FOOTBALL_KEY is unconfigured or placeholder.")
 

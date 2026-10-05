@@ -267,7 +267,7 @@ def run_detector():
         if frame_idx % PROCESS_EVERY_N == 0:
             t0              = time.perf_counter()
             raw_detections  = detect_persons(model, frame, CONFIDENCE_THRESH)
-            kept_detections = pitch_filter.filter(raw_detections)
+            kept_detections = pitch_filter.filter(raw_detections, frame_shape=frame.shape)
             t1              = time.perf_counter()
             fps_display     = 1.0 / max(t1 - t0, 1e-9)
 

@@ -27,8 +27,8 @@ class BallTracker:
 
     def __init__(
         self,
-        max_missing_frames: int = 6,
-        max_ball_size_px: int = 50,
+        max_missing_frames: int = 8,
+        max_ball_size_px: int = 32,
     ) -> None:
         self.max_missing_frames = max_missing_frames
         self.max_ball_size_px = max_ball_size_px
@@ -43,20 +43,30 @@ class BallTracker:
         # Ball trajectory history: list of (x, y) coordinates
         self.trajectory: List[Tuple[int, int]] = []
 
+        # Static candidate filter: center -> consecutive static frame count
+        self.static_candidates: Dict[Tuple[int, int], int] = {}
+
     def update(
         self,
         ball_detections: List[Dict],
         player_bboxes: List[Tuple[int, int, int, int]],
         frame_shape: Tuple[int, int],
+        pitch_polygon: Optional[np.ndarray] = None,
     ) -> Optional[Dict]:
         """
         Update ball state from candidate YOLO detections and temporal predictions.
-
-        ball_detections: list of dicts: {"xyxy": (x1, y1, x2, y2), "conf": float}
+        Filters out static broadcast overlays, scoreboard ball icons, and off-pitch false detections.
         """
         fh, fw = frame_shape[:2]
         best_candidate: Optional[Dict] = None
         highest_score = 0.0
+
+        # Decay static candidate history
+        active_static = {}
+        for (sx, sy), scount in self.static_candidates.items():
+            if scount > 1:
+                active_static[(sx, sy)] = scount - 1
+        self.static_candidates = active_static
 
         for det in ball_detections:
             x1, y1, x2, y2 = det["xyxy"]
@@ -77,8 +87,46 @@ class BallTracker:
             cx = (x1 + x2) // 2
             cy = (y1 + y2) // 2
 
-            # 2. Score candidate based on confidence and continuity with last known position
+            # 2. Exclude broadcast overlay zones (score bugs, watermarks)
+            if cy < fh * 0.11 and (cx < fw * 0.40 or cx > fw * 0.65):
+                continue
+            if y2 > fh * 0.85 and (x1 < fw * 0.22 or x2 > fw * 0.78):
+                continue
+
+            # 3. Pitch constraint: ball must be on the pitch
+            if pitch_polygon is not None:
+                dist = cv2.pointPolygonTest(pitch_polygon, (float(cx), float(cy)), measureDist=True)
+                if dist < -15.0:
+                    continue
+
+            # 4. Filter static graphic logos (e.g. ball icons inside logos that don't move)
+            matched_static = False
+            for (sx, sy), scount in list(self.static_candidates.items()):
+                if np.hypot(cx - sx, cy - sy) <= 3.0:
+                    self.static_candidates[(sx, sy)] = scount + 1
+                    matched_static = True
+                    if scount >= 4:
+                        # Stationary for >= 4 detections without movement: ignore static graphic
+                        det_is_static = True
+                    break
+            if not matched_static:
+                self.static_candidates[(cx, cy)] = 1
+
+            if matched_static and self.static_candidates.get((sx, sy), 0) >= 4:
+                continue
+
+            # 5. Score candidate based on confidence and continuity with last known position
             score = conf
+
+            # Bonus score if near a player (live play context)
+            if player_bboxes:
+                min_pdist = min(
+                    np.hypot(cx - ((pb[0] + pb[2]) // 2), cy - pb[3])
+                    for pb in player_bboxes
+                )
+                if min_pdist < 120.0:
+                    score *= 1.25
+
             if self.current_center is not None and self.missing_frames < self.max_missing_frames:
                 pred_x = self.current_center[0] + self.velocity[0] * (self.missing_frames + 1)
                 pred_y = self.current_center[1] + self.velocity[1] * (self.missing_frames + 1)

@@ -41,12 +41,30 @@ function HeroStatCard({
   );
 }
 
+const VALID_TABS = ["matches", "calendar", "analytics", "video", "prediction"];
+
 export default function Home() {
-  const [activeTab, setActiveTab] = useState<string>("matches");
+  const [activeTab, setActiveTabState] = useState<string>("matches");
   const [apiConnected, setApiConnected] = useState<boolean>(false);
   const [liveCount, setLiveCount] = useState<number>(0);
   const [todayCount, setTodayCount] = useState<number>(0);
   const [loadingStats, setLoadingStats] = useState<boolean>(true);
+
+  // Persist the selected tab in the URL hash so refresh/share keeps the view.
+  const setActiveTab = (tab: string) => {
+    setActiveTabState(tab);
+    if (typeof window !== "undefined") window.history.replaceState(null, "", `#${tab}`);
+  };
+
+  useEffect(() => {
+    const applyHash = () => {
+      const hash = window.location.hash.replace("#", "");
+      if (VALID_TABS.includes(hash)) setActiveTabState(hash);
+    };
+    applyHash();
+    window.addEventListener("hashchange", applyHash);
+    return () => window.removeEventListener("hashchange", applyHash);
+  }, []);
 
   const checkApiConnection = async () => {
     try {
@@ -76,11 +94,30 @@ export default function Home() {
   };
 
   useEffect(() => {
-    checkApiConnection();
-    fetchHeroStats();
-    const apiInterval = setInterval(checkApiConnection, 12000);
-    const statsInterval = setInterval(fetchHeroStats, 60000);
-    return () => { clearInterval(apiInterval); clearInterval(statsInterval); };
+    let apiInterval: ReturnType<typeof setInterval> | undefined;
+    let statsInterval: ReturnType<typeof setInterval> | undefined;
+
+    const start = () => {
+      checkApiConnection();
+      fetchHeroStats();
+      apiInterval = setInterval(checkApiConnection, 12000);
+      statsInterval = setInterval(fetchHeroStats, 60000);
+    };
+    const stop = () => {
+      clearInterval(apiInterval);
+      clearInterval(statsInterval);
+    };
+    const onVisibility = () => {
+      stop();
+      if (document.visibilityState === "visible") start();
+    };
+
+    start();
+    document.addEventListener("visibilitychange", onVisibility);
+    return () => {
+      stop();
+      document.removeEventListener("visibilitychange", onVisibility);
+    };
   }, []);
 
   const heroStats = [

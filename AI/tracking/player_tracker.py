@@ -437,7 +437,13 @@ class PlayerTracker:
         off_pitch: List[Dict] = []
 
         for track in raw_tracks:
-            foot = self._foot_point(track["xyxy"])
+            xyxy = track["xyxy"]
+            if self.pitch_filter.is_in_overlay_zone(xyxy, frame.shape) or not self.pitch_filter.is_valid_person_box(xyxy, frame.shape):
+                track["on_pitch"] = False
+                off_pitch.append(track)
+                continue
+
+            foot = self._foot_point(xyxy)
             if self.pitch_filter.polygon is not None:
                 dist = cv2.pointPolygonTest(
                     self.pitch_filter.polygon,
