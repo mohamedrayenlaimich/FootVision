@@ -13,6 +13,8 @@ from main import app
 from team_classifier import TeamClassifier
 from referee_detector import RefereeDetector
 from ball_tracker import BallTracker
+from pitch_filter import PitchFilter
+from app.services.video_analysis_service import StaticAdFilter
 
 client = TestClient(app)
 
@@ -104,3 +106,98 @@ def test_video_api_status_not_found():
     """Test 404 for unknown video job ID."""
     response = client.get("/api/v1/video/status/non-existent-uuid-12345")
     assert response.status_code == 404
+
+
+def test_single_goalkeeper_enforcement():
+    """Verify that at most 1 goalkeeper is allowed per team and goalmouth player is chosen."""
+    clf = TeamClassifier(min_cluster_samples=2)
+    # Set mock calibrated centroids
+    clf.centroid_a = np.array([50.0, 10.0, -40.0], dtype=np.float32)  # Blue
+    clf.centroid_b = np.array([50.0, 50.0, 30.0], dtype=np.float32)   # Red
+    clf.is_calibrated = True
+
+    # 3 tracks:
+    # 131: Real GK in goal mouth (x=100, defending left)
+    # 204: Ad / outlier on the right touchline (x=900)
+    # 246: Outlier near top banner (x=120, y=50)
+    tracks = [
+        {
+            "track_id": 131,
+            "xyxy": (90, 240, 130, 340),  # In goalmouth, left end
+            "conf": 0.85,
+            "classification": {"team": "Team A", "is_gk": True, "label": "TEAM A (GK) | Player #131"},
+        },
+        {
+            "track_id": 204,
+            "xyxy": (880, 300, 920, 400), # Far right touchline
+            "conf": 0.55,
+            "classification": {"team": "Team A", "is_gk": True, "label": "TEAM A (GK) | Player #204"},
+        },
+        {
+            "track_id": 246,
+            "xyxy": (100, 30, 140, 110),  # Top banner ad
+            "conf": 0.45,
+            "classification": {"team": "Team A", "is_gk": True, "label": "TEAM A (GK) | Player #246"},
+        },
+    ]
+
+    # Enforce constraints
+    clf.enforce_team_and_gk_constraints(tracks, frame_shape=(720, 1280))
+
+    gk_count = sum(1 for t in tracks if t["classification"].get("is_gk", False))
+    # STRICT RULE: exactly 1 GK, NEVER 3!
+    assert gk_count == 1
+    # The real GK in the goalmouth (131) must be chosen!
+    assert tracks[0]["classification"]["is_gk"] is True
+    assert "GK" in tracks[0]["classification"]["label"]
+    # The ad / outlier tracks must be stripped of GK!
+    assert tracks[1]["classification"]["is_gk"] is False
+    assert "GK" not in tracks[1]["classification"]["label"]
+    assert tracks[2]["classification"]["is_gk"] is False
+    assert "GK" not in tracks[2]["classification"]["label"]
+
+
+def test_static_ad_filter():
+    """Verify that stationary billboard / LED ad tracks are filtered out."""
+    filter_ad = StaticAdFilter(min_frames=10, max_movement_std=2.5)
+
+    # Track 204 stays at (500, 300) with 0 movement (ad hoarding)
+    # Track 171 moves from (200, 200) across the field (running player)
+    for frame_idx in range(15):
+        tracks = [
+            {"track_id": 204, "xyxy": (480, 280, 520, 320)},
+            {"track_id": 171, "xyxy": (200 + frame_idx * 10, 200, 240 + frame_idx * 10, 280)},
+        ]
+        filtered = filter_ad.update_and_filter(tracks)
+
+    # After 15 frames, static ad track 204 must be suppressed
+    remaining_ids = [t["track_id"] for t in filtered]
+    assert 204 not in remaining_ids
+    assert 171 in remaining_ids
+
+
+def test_aspect_ratio_rejection():
+    """Square logos or banners (aspect ratio < 1.35) must be rejected."""
+    # Heineken star or square icon: 40x40 -> aspect ratio 1.0
+    square_box = (100, 100, 140, 140)
+    assert PitchFilter.is_valid_person_box(square_box, (720, 1280)) is False
+
+    # Normal player: 25x80 -> aspect ratio 3.2
+    player_box = (100, 100, 125, 180)
+    assert PitchFilter.is_valid_person_box(player_box, (720, 1280)) is True
+
+
+def test_foot_on_grass_filter():
+    """Persons whose feet do not touch green pitch grass are rejected."""
+    # Synthetic frame: top half dark (ad boards/crowd), bottom half green grass
+    frame = np.zeros((200, 200, 3), dtype=np.uint8)
+    frame[:100, :] = (40, 40, 40)       # Dark ad boards / barrier
+    frame[100:, :] = (35, 150, 40)      # Green grass (BGR)
+
+    # Bounding box elevated on ad board (feet at y2 = 80, no grass around)
+    ad_box = (50, 20, 75, 80)
+    assert PitchFilter.is_on_grass_surface(frame, ad_box) is False
+
+    # Player standing on grass (feet at y2 = 160, surrounded by green grass)
+    player_box = (50, 110, 75, 170)
+    assert PitchFilter.is_on_grass_surface(frame, player_box) is True

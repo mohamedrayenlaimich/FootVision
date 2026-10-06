@@ -157,10 +157,11 @@ class PitchFilter:
     @staticmethod
     def is_valid_person_box(xyxy: Tuple[int, int, int, int], frame_shape: Tuple[int, int]) -> bool:
         """
-        Filter out non-human bounding boxes (TV logos, graphic banners, square icons):
+        Filter out non-human bounding boxes (TV logos, graphic banners, square icons, ads):
         - Humans are vertically proportioned (height > width).
-        - Height must be at least 18px and width at least 7px.
-        - Aspect ratio (height / width) must typically be between 1.10 and 4.8.
+        - Height must be at least 20px and width at least 8px.
+        - Aspect ratio (height / width) must typically be between 1.35 and 4.8.
+          Square icons / logos (like ad stars/badges) typically have aspect ratio < 1.30.
         - Height should not exceed 45% of the frame (rejects giant false detections).
         """
         fh, fw = frame_shape[:2]
@@ -168,21 +169,66 @@ class PitchFilter:
         w = max(1, x2 - x1)
         h = max(1, y2 - y1)
 
-        if h < 18 or w < 7:
+        if h < 20 or w < 8:
             return False
         if h > fh * 0.45 or w > fw * 0.35:
             return False
 
         aspect_ratio = h / float(w)
-        if aspect_ratio < 1.10 or aspect_ratio > 4.8:
+        if aspect_ratio < 1.35 or aspect_ratio > 4.8:
             return False
 
         return True
 
-    def filter(self, detections: List[Dict], frame_shape: Optional[Tuple[int, int]] = None) -> List[Dict]:
+    @staticmethod
+    def is_on_grass_surface(
+        frame: Optional[np.ndarray],
+        xyxy: Tuple[int, int, int, int],
+        min_grass_ratio: float = 0.08,
+    ) -> bool:
+        """
+        Check if the ground patch immediately around and under the person's feet touches
+        the green pitch grass surface.
+        This strongly rejects advertising hoardings, LED boards, banners, and spectators.
+        """
+        if frame is None or frame.size == 0:
+            return True
+        fh, fw = frame.shape[:2]
+        x1, y1, x2, y2 = xyxy
+        h = max(1, y2 - y1)
+        w = max(1, x2 - x1)
+
+        # Region around feet contact: bottom 10% of box to 12% below box
+        y_bottom_start = max(0, y2 - int(h * 0.10))
+        y_bottom_end = min(fh, y2 + int(h * 0.12) + 2)
+        x_bottom_start = max(0, x1 + int(w * 0.10))
+        x_bottom_end = min(fw, x2 - int(w * 0.10))
+
+        if y_bottom_end <= y_bottom_start or x_bottom_end <= x_bottom_start:
+            return True
+
+        patch = frame[y_bottom_start:y_bottom_end, x_bottom_start:x_bottom_end]
+        if patch.size == 0:
+            return True
+
+        hsv = cv2.cvtColor(patch, cv2.COLOR_BGR2HSV)
+        h_ch, s_ch, v_ch = cv2.split(hsv)
+
+        # Standard green pitch grass profile
+        grass_mask = (h_ch >= 28) & (h_ch <= 88) & (s_ch >= 28) & (v_ch >= 25)
+        grass_ratio = float(np.mean(grass_mask))
+
+        return grass_ratio >= min_grass_ratio
+
+    def filter(
+        self,
+        detections: List[Dict],
+        frame_shape: Optional[Tuple[int, int]] = None,
+        frame: Optional[np.ndarray] = None,
+    ) -> List[Dict]:
         """
         Keep only valid person detections whose feet are on the pitch
-        and are not on-screen logos or broadcast overlays.
+        and are not on-screen logos, broadcast overlays, or advertising boards.
         """
         filtered = []
         for det in detections:
@@ -201,6 +247,13 @@ class PitchFilter:
                     if self.debug:
                         filtered.append(det)
                     continue
+
+            # Ground grass contact check (rejects billboard images and perimeter hoardings)
+            if frame is not None and not self.is_on_grass_surface(frame, xyxy):
+                det["on_pitch"] = False
+                if self.debug:
+                    filtered.append(det)
+                continue
 
             # Pitch polygon check
             if self.polygon is not None:
@@ -338,9 +391,10 @@ class PitchFilter:
             return False
         xs = pts[:, 0]
         ys = pts[:, 1]
-        # If vertices are all near (0, 0) and image corners with min(xs) == 0 and min(ys) == 0
-        if int(np.min(xs)) == 0 and int(np.min(ys)) == 0 and int(np.max(xs)) == int(np.max(ys)):
-            return True
+        # Full frame box or default placeholder (e.g. [[0, 0], [720, 0], [720, 720], [0, 720]])
+        if int(np.min(xs)) == 0 and int(np.min(ys)) == 0:
+            if len(set(xs.tolist())) <= 2 and len(set(ys.tolist())) <= 2:
+                return True
         return False
 
     def auto_detect_pitch(self, frame: Optional[np.ndarray] = None) -> bool:

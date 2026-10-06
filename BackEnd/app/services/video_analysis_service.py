@@ -45,6 +45,59 @@ from video_annotator import VideoAnnotator
 logger = logging.getLogger("footvision.video_analysis")
 
 
+class StaticAdFilter:
+    """
+    Detects and filters out stationary objects (advertising hoardings,
+    static stadium logos, fixed perimeter graphics) that YOLO falsely detects as people.
+
+    Heuristic:
+    - Real players are dynamic athletes: they run, shift weight, turn, and reposition.
+    - Advertising boards and billboard graphics are rigidly fixed to the stadium.
+    - If a track ID's center position has virtually zero displacement over multiple frames
+      (movement std < 2.5 pixels over >= 12 frames), it is confirmed as a static advertisement.
+    """
+
+    def __init__(self, min_frames: int = 12, max_movement_std: float = 2.5) -> None:
+        self.min_frames = min_frames
+        self.max_movement_std = max_movement_std
+        # track_id -> list of (cx, cy)
+        self.position_history: Dict[int, List[Tuple[float, float]]] = {}
+        self.confirmed_static_ids: set[int] = set()
+
+    def update_and_filter(self, tracks: List[Dict]) -> List[Dict]:
+        active_tracks = []
+        for t in tracks:
+            tid = t["track_id"]
+            if tid in self.confirmed_static_ids:
+                continue
+
+            x1, y1, x2, y2 = t["xyxy"]
+            cx = (x1 + x2) / 2.0
+            cy = (y1 + y2) / 2.0
+
+            if tid not in self.position_history:
+                self.position_history[tid] = []
+            self.position_history[tid].append((cx, cy))
+            if len(self.position_history[tid]) > 40:
+                self.position_history[tid].pop(0)
+
+            # Check if static
+            if len(self.position_history[tid]) >= self.min_frames:
+                pts = np.array(self.position_history[tid])
+                std_x = float(np.std(pts[:, 0]))
+                std_y = float(np.std(pts[:, 1]))
+                movement_std = (std_x**2 + std_y**2)**0.5
+
+                if movement_std < self.max_movement_std:
+                    logger.info(f"Filtering static advertising fixture track #{tid} (std={movement_std:.2f}px)")
+                    self.confirmed_static_ids.add(tid)
+                    continue
+
+            active_tracks.append(t)
+
+        return active_tracks
+
+
 class VideoAnalysisPipeline:
     """
     Production-grade video analysis and multi-object tracking pipeline.
@@ -55,7 +108,7 @@ class VideoAnalysisPipeline:
         model_path: Optional[str] = None,
         polygon_path: Optional[str] = None,
         process_every_n: int = 1,
-        conf_thresh: float = 0.30,
+        conf_thresh: float = 0.40,
         iou_thresh: float = 0.45,
     ) -> None:
         self.model_path = model_path or str(PROJECT_ROOT / "AI" / "models" / "yolov8s.pt")
@@ -105,6 +158,7 @@ class VideoAnalysisPipeline:
         )
         team_classifier = TeamClassifier(history_window=30)
         referee_detector = RefereeDetector()
+        static_ad_filter = StaticAdFilter()
         ball_tracker = BallTracker()
         annotator = VideoAnnotator(
             show_boxes=True,
@@ -192,8 +246,11 @@ class VideoAnalysisPipeline:
                                 "cls_id": cls_id,
                             })
 
-                # Pitch filtering: keep only valid players with feet on the pitch (rejects TV logos, scoreboards, stands)
-                on_pitch_tracks = pitch_filter.filter(person_tracks, frame_shape=(height, width))
+                # Pitch filtering: keep only valid players with feet on the pitch (rejects TV logos, scoreboards, stands, ads)
+                on_pitch_tracks = pitch_filter.filter(person_tracks, frame_shape=(height, width), frame=frame)
+
+                # Filter out stationary advertising boards and fixed graphics
+                on_pitch_tracks = static_ad_filter.update_and_filter(on_pitch_tracks)
 
                 # Referee identification with kit separation against team kit colors
                 ref_map = referee_detector.identify_referees(
@@ -232,6 +289,9 @@ class VideoAnalysisPipeline:
                             team_a_ids.add(tid)
                         elif classification["team"] == "Team B":
                             team_b_ids.add(tid)
+
+                # Enforce football match rules: STRICT MAXIMUM OF 1 GK PER TEAM & GOAL DEPTH VERIFICATION
+                team_classifier.enforce_team_and_gk_constraints(on_pitch_tracks, frame_shape=(height, width))
 
                 # Ball tracking update with pitch constraint and overlay rejection
                 player_boxes = [t["xyxy"] for t in on_pitch_tracks]
@@ -274,6 +334,7 @@ class VideoAnalysisPipeline:
                         {
                             "track_id": t["track_id"],
                             "team": t.get("classification", {}).get("team", "UNKNOWN"),
+                            "is_gk": t.get("classification", {}).get("is_gk", False),
                             "is_referee": t.get("is_referee", False),
                             "bbox": list(t["xyxy"]),
                             "conf": t.get("conf", 0.0),

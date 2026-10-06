@@ -42,6 +42,11 @@ class TeamClassifier:
         # Track smoothed assignment: track_id -> {"team": str, "conf": float, "is_gk": bool}
         self.track_team_cache: Dict[int, Dict] = {}
 
+        # Goalkeeper tracking & single-GK enforcement
+        self.team_a_gk_id: Optional[int] = None
+        self.team_b_gk_id: Optional[int] = None
+        self.gk_candidate_history: Dict[int, int] = {}
+
         # Centroids in Lab color space: [L, a, b]
         self.centroid_a: Optional[np.ndarray] = None
         self.centroid_b: Optional[np.ndarray] = None
@@ -165,7 +170,7 @@ class TeamClassifier:
             conf_b = 1.0 - (dist_b / total_dist)
 
             # Check if goalkeeper outlier (significantly distinct from both centroids)
-            is_gk = (dist_a > 45.0 and dist_b > 45.0)
+            is_color_outlier = (dist_a > 40.0 and dist_b > 40.0)
 
             if dist_a < dist_b:
                 assigned_team = "Team A"
@@ -175,6 +180,22 @@ class TeamClassifier:
                 assigned_team = "Team B"
                 confidence = round(conf_b, 2)
                 color_code = "red"
+
+            # Goalkeeper assignment logic:
+            # If this player is ALREADY the confirmed GK for this team:
+            if assigned_team == "Team A" and self.team_a_gk_id == track_id:
+                is_gk = True
+            elif assigned_team == "Team B" and self.team_b_gk_id == track_id:
+                is_gk = True
+            elif is_color_outlier:
+                # If team already has an active confirmed GK, this track CANNOT be a second GK!
+                active_gk = self.team_a_gk_id if assigned_team == "Team A" else self.team_b_gk_id
+                if active_gk is not None and active_gk != track_id:
+                    is_gk = False
+                else:
+                    is_gk = True
+            else:
+                is_gk = False
 
             res = {
                 "team": assigned_team,
@@ -199,6 +220,129 @@ class TeamClassifier:
             "color_code": "gray",
             "is_gk": False,
         }
+
+    def enforce_team_and_gk_constraints(
+        self,
+        tracks: List[Dict],
+        frame_shape: Optional[Tuple[int, int]] = None,
+    ) -> None:
+        """
+        Enforces football match rules on all tracks in the current frame:
+        1. STRICT MAXIMUM OF 1 GOALKEEPER PER TEAM at any time!
+        2. Goal area depth verification: goalkeepers must be in the defensive goal zone,
+           NOT along the touchline, midfield, or on stadium advertising hoardings.
+        3. Locks confirmed Goalkeeper identity across frames.
+        4. Strips 'GK' designation from any secondary outliers or ad graphics,
+           re-labeling them as standard outfield players.
+        """
+        for team_name in ("Team A", "Team B"):
+            team_tracks = [
+                t for t in tracks
+                if t.get("classification", {}).get("team") == team_name
+                and not t.get("is_referee", False)
+            ]
+            if not team_tracks:
+                continue
+
+            active_gk_id = self.team_a_gk_id if team_name == "Team A" else self.team_b_gk_id
+
+            # Find all candidates flagged as GK or with outlier colors
+            candidates = []
+            for t in team_tracks:
+                tid = t["track_id"]
+                cls_info = t.get("classification", {})
+                is_flagged = cls_info.get("is_gk", False)
+
+                is_outlier = False
+                if tid in self.track_color_history and self.is_calibrated and len(self.track_color_history[tid]) > 0:
+                    avg_feat = np.mean(self.track_color_history[tid], axis=0)
+                    da = float(np.linalg.norm(avg_feat - self.centroid_a))
+                    db = float(np.linalg.norm(avg_feat - self.centroid_b))
+                    if da > 38.0 and db > 38.0:
+                        is_outlier = True
+
+                if is_flagged or is_outlier or (active_gk_id is not None and tid == active_gk_id):
+                    candidates.append(t)
+
+            if not candidates:
+                continue
+
+            fw = frame_shape[1] if frame_shape else 1280
+            fh = frame_shape[0] if frame_shape else 720
+
+            # Determine team defending direction (left or right side of field)
+            team_xs = [(t["xyxy"][0] + t["xyxy"][2]) / 2.0 for t in team_tracks]
+            mean_team_x = float(np.mean(team_xs)) if team_xs else fw * 0.5
+            defending_left = (mean_team_x < fw * 0.5)
+
+            scored_candidates = []
+            for cand in candidates:
+                tid = cand["track_id"]
+                x1, y1, x2, y2 = cand["xyxy"]
+                cx = (x1 + x2) / 2.0
+                cy = (y1 + y2) / 2.0
+                w = max(1, x2 - x1)
+                h = max(1, y2 - y1)
+
+                score = 0.0
+
+                # 1. Confirmed GK bonus
+                if active_gk_id is not None and tid == active_gk_id:
+                    score += 10.0
+
+                # 2. Defensive goal depth
+                if defending_left:
+                    norm_dist_to_goal = cx / max(1.0, float(fw))
+                    depth_score = max(0.0, 1.0 - norm_dist_to_goal) * 5.0
+                else:
+                    norm_dist_to_goal = (fw - cx) / max(1.0, float(fw))
+                    depth_score = max(0.0, 1.0 - norm_dist_to_goal) * 5.0
+                score += depth_score
+
+                # 3. Midfield & sideline penalty
+                if 0.38 * fw <= cx <= 0.62 * fw:
+                    score -= 8.0  # In midfield, cannot be GK
+
+                # 4. Perimeter banner / ad hoarding penalty
+                if y1 < 0.16 * fh or y2 > 0.96 * fh:
+                    score -= 6.0
+
+                # 5. Aspect ratio check (human player silhouette)
+                aspect = h / float(w)
+                if 1.6 <= aspect <= 3.8:
+                    score += 2.0
+                else:
+                    score -= 4.0
+
+                scored_candidates.append((score, cand))
+
+            scored_candidates.sort(key=lambda x: x[0], reverse=True)
+            best_score, best_cand = scored_candidates[0]
+
+            if best_score > 1.5:
+                best_tid = best_cand["track_id"]
+                if team_name == "Team A":
+                    self.team_a_gk_id = best_tid
+                else:
+                    self.team_b_gk_id = best_tid
+
+                best_cand["classification"]["is_gk"] = True
+                best_cand["classification"]["label"] = f"{team_name} (GK) | Player #{best_tid}"
+                self.track_team_cache[best_tid] = best_cand["classification"]
+
+                # STRICT RULE: Disallow ALL other candidates on this team from being GK!
+                for sc, other in scored_candidates[1:]:
+                    otid = other["track_id"]
+                    other["classification"]["is_gk"] = False
+                    other["classification"]["label"] = f"{team_name} | Player #{otid}"
+                    self.track_team_cache[otid] = other["classification"]
+            else:
+                # No candidate meets GK requirements (e.g. ad banners or midfield players)
+                for sc, other in scored_candidates:
+                    otid = other["track_id"]
+                    other["classification"]["is_gk"] = False
+                    other["classification"]["label"] = f"{team_name} | Player #{otid}"
+                    self.track_team_cache[otid] = other["classification"]
 
     # =========================================================================
     # INTERNAL METHODS
